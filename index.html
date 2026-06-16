@@ -1,0 +1,514 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>BECE Central — Surulere Junior Secondary School</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Dancing+Script:wght@600;700&family=Playfair+Display:ital,wght@0,600;1,600&family=Space+Grotesk:wght@500;700&family=Work+Sans:wght@400;500;600&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --white: #FFFFFF;
+    --paper: #F3F8FD;
+    --royal: #1D4FA3;
+    --navy: #0A2647;
+    --gold: #C9A227;
+    --mist: #DCE8F7;
+    --success: #28a745;
+  }
+  * { box-sizing: border-box; }
+  body {
+    margin: 0;
+    min-height: 100vh;
+    background: var(--paper);
+    color: var(--navy);
+    font-family: 'Work Sans', sans-serif;
+    display: flex;
+    justify-content: center;
+    padding: 2.5rem 1.25rem;
+  }
+  .wrap { width: 100%; max-width: 620px; position: relative; }
+
+  .badge {
+    width: 62px; height: 62px;
+    border-radius: 50%;
+    border: 3px solid var(--navy);
+    background: var(--royal);
+    color: #fff;
+    display: flex; align-items: center; justify-content: center;
+    font-family: 'Playfair Display', serif;
+    font-weight: 600;
+    font-size: 1.05rem;
+    letter-spacing: 0.03em;
+    margin: 0 auto 0.6rem;
+    box-shadow: 0 4px 12px rgba(29, 79, 163, 0.2);
+  }
+  .school-name {
+    text-align: center;
+    font-size: 0.95rem;
+    font-weight: 600;
+    letter-spacing: 0.04em;
+    color: var(--navy);
+    margin-bottom: 0.15rem;
+  }
+  .school-tag {
+    text-align: center;
+    font-size: 0.7rem;
+    letter-spacing: 0.16em;
+    text-transform: uppercase;
+    color: var(--royal);
+    margin-bottom: 1.1rem;
+  }
+  h1 {
+    font-family: 'Dancing Script', cursive;
+    font-weight: 700;
+    font-size: 3.2rem;
+    text-align: center;
+    margin: 0 0 0.15rem;
+    color: var(--royal);
+    line-height: 1;
+  }
+  .examline {
+    text-align: center;
+    color: var(--navy);
+    font-size: 0.92rem;
+    margin-bottom: 1.7rem;
+    font-family: 'Playfair Display', serif;
+    font-style: italic;
+  }
+  .examline strong { color: var(--gold); font-weight: 600; font-style: normal; }
+
+  /* Countdown Mode */
+  .countdown {
+    display: flex; justify-content: center; align-items: flex-end;
+    gap: 0.9rem; flex-wrap: wrap; margin-bottom: 1.8rem;
+  }
+  .unit { display: flex; flex-direction: column; align-items: center; }
+  .digit-box {
+    position: relative; overflow: hidden;
+    background: var(--white);
+    border: 2px solid var(--royal);
+    border-radius: 10px;
+    min-width: 74px;
+    padding: 0.5rem 0.3rem;
+    text-align: center;
+    box-shadow: 0 3px 8px rgba(10,38,71,0.08);
+  }
+  .digit-box span {
+    font-family: 'Space Grotesk', sans-serif;
+    font-weight: 700;
+    font-size: 2.3rem;
+    color: var(--navy);
+    font-variant-numeric: tabular-nums;
+  }
+  .digit-box::after {
+    content: ''; position: absolute; inset: 0;
+    background: linear-gradient(100deg, transparent, rgba(201,162,39,0.35), transparent);
+    transform: translateX(-130%);
+  }
+  .digit-box.wipe::after { animation: shine 0.6s ease; }
+  @keyframes shine { to { transform: translateX(130%); } }
+  .unit .label {
+    font-size: 0.68rem; letter-spacing: 0.14em;
+    text-transform: uppercase; color: var(--royal);
+    margin-top: 0.45rem; font-weight: 600;
+  }
+
+  .progress-section { margin-bottom: 1.9rem; text-align: center; }
+  .bubbles { display: flex; justify-content: center; gap: 6px; flex-wrap: wrap; margin-bottom: 0.55rem; }
+  .bubble { width: 16px; height: 16px; border-radius: 50%; border: 2px solid var(--royal); transition: 0.3s ease; }
+  .bubble.filled { background: var(--gold); border-color: var(--gold); }
+  .progress-label { font-size: 0.85rem; color: var(--navy); }
+  .progress-label strong { color: var(--royal); }
+
+  /* Exam Active Mode */
+  .active-exam-card {
+    display: none;
+    text-align: center;
+    background: linear-gradient(135deg, var(--royal), var(--navy));
+    color: var(--white);
+    border-radius: 12px;
+    padding: 2.5rem 1.5rem;
+    margin-bottom: 2rem;
+    box-shadow: 0 8px 24px rgba(10, 38, 71, 0.2);
+    animation: fadeIn 0.8s ease;
+  }
+  .active-exam-card h2 {
+    font-family: 'Space Grotesk', sans-serif;
+    font-size: 1.2rem; text-transform: uppercase; letter-spacing: 0.1em;
+    margin: 0 0 0.5rem; color: var(--gold);
+  }
+  .active-exam-card .day-counter {
+    font-family: 'Playfair Display', serif;
+    font-size: 3.5rem; font-weight: 700; margin: 0 0 0.5rem;
+  }
+  .active-exam-card p { margin: 0; font-size: 0.95rem; opacity: 0.9; }
+
+  /* Done Mode */
+  .done-card {
+    display: none;
+    text-align: center; background: var(--white);
+    border: 2px solid var(--gold); border-radius: 12px;
+    padding: 2.5rem 1.5rem; margin-bottom: 1.9rem;
+    box-shadow: 0 8px 24px rgba(201, 162, 39, 0.15);
+    animation: fadeIn 0.8s ease;
+  }
+  .done-card h2 { font-family: 'Dancing Script', cursive; font-size: 2.8rem; margin: 0 0 0.4rem; color: var(--royal); }
+  .done-card p { color: var(--navy); margin: 0; font-size: 1.05rem; line-height: 1.5; }
+
+  @keyframes fadeIn { from { opacity: 0; transform: translateY(10px); } to { opacity: 1; transform: translateY(0); } }
+
+  /* Cards */
+  .quote-card, .checklist-card, .timetable-card {
+    background: var(--white); border-radius: 10px;
+    border: 1px solid var(--mist); padding: 1.3rem 1.5rem;
+    margin-bottom: 1.6rem; box-shadow: 0 4px 12px rgba(10, 38, 71, 0.03);
+  }
+  .quote-card { text-align: center; }
+  .quote-text { font-size: 1rem; font-weight: 500; min-height: 2.6em; display: flex; align-items: center; justify-content: center; }
+  
+  .checklist-title, .timetable-title {
+    font-size: 0.85rem; text-transform: uppercase; letter-spacing: 0.08em;
+    color: var(--royal); margin-bottom: 1rem; font-weight: 700;
+    display: flex; justify-content: space-between; align-items: center;
+  }
+  .checklist-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 0.8rem 1rem; }
+  .check-row {
+    display: flex; align-items: center; gap: 0.6rem; font-size: 0.88rem;
+    cursor: pointer; padding: 0.4rem; border-radius: 6px; transition: background 0.2s;
+  }
+  .check-row:hover { background: var(--paper); }
+  .check-row input {
+    appearance: none; width: 20px; height: 20px;
+    border: 2px solid var(--royal); border-radius: 4px;
+    cursor: pointer; position: relative; transition: 0.2s;
+  }
+  .check-row input:checked { background: var(--royal); border-color: var(--royal); }
+  .check-row input:checked::after {
+    content: '✓'; position: absolute; color: white;
+    font-size: 14px; top: -1px; left: 3px; font-weight: bold;
+  }
+  .check-row.completed span { text-decoration: line-through; color: #888; }
+  
+  .meter { height: 8px; border-radius: 4px; background: var(--mist); margin: 1.2rem 0 0.6rem; overflow: hidden; }
+  .meter-fill { height: 100%; background: var(--gold); width: 0%; transition: width 0.5s cubic-bezier(0.4, 0, 0.2, 1); }
+  .meter-fill.pulse { animation: pulseBg 0.5s ease; }
+  @keyframes pulseBg { 0% { filter: brightness(1); } 50% { filter: brightness(1.3); } 100% { filter: brightness(1); } }
+  
+  .checklist-foot { display: flex; justify-content: space-between; align-items: center; font-size: 0.82rem; color: var(--navy); font-weight: 500; }
+  .checklist-foot button {
+    background: none; border: none; color: var(--royal); cursor: pointer;
+    font-family: inherit; font-size: 0.82rem; text-decoration: underline; padding: 0; font-weight: 600;
+  }
+
+  .timetable-card summary { cursor: pointer; font-weight: 700; color: var(--royal); list-style: none; display: flex; justify-content: space-between; align-items: center; }
+  .timetable-card summary::-webkit-details-marker { display: none; }
+  .timetable-card summary::after { content: '+'; font-size: 1.2rem; }
+  .timetable-card[open] summary::after { content: '−'; }
+  .ttable-wrap { overflow-x: auto; margin-top: 1rem; }
+  table.ttable { width: 100%; border-collapse: collapse; font-size: 0.85rem; min-width: 480px; }
+  table.ttable th { background: var(--navy); color: #fff; padding: 0.6rem; text-align: left; font-weight: 600; }
+  table.ttable td { padding: 0.6rem; border-bottom: 1px solid var(--mist); vertical-align: top; }
+  table.ttable tr:nth-child(even) td { background: var(--paper); }
+  table.ttable tr:hover td { background: var(--mist); }
+
+  footer { text-align: center; font-size: 0.8rem; font-weight: 500; color: var(--royal); margin-top: 1rem; opacity: 0.8; }
+  :focus-visible { outline: 2px solid var(--gold); outline-offset: 2px; }
+
+  @media (max-width: 480px) {
+    h1 { font-size: 2.5rem; }
+    .digit-box { min-width: 58px; padding: 0.4rem 0.2rem; }
+    .digit-box span { font-size: 1.7rem; }
+    .checklist-grid { grid-template-columns: 1fr; gap: 0.2rem; }
+    .active-exam-card .day-counter { font-size: 2.8rem; }
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    .digit-box::after, .meter-fill { transition: none; animation: none; }
+  }
+</style>
+</head>
+<body>
+
+<div class="wrap" role="timer" aria-live="polite">
+  
+  <div class="badge">SJSS</div>
+  <div class="school-name">Surulere Junior Secondary School</div>
+  <div class="school-tag">JSS3 · Final Stretch</div>
+
+  <h1>Countdown to BECE 2026</h1>
+  <div class="examline">Begins <strong id="examDateText">Mon, Jun 29, 2026</strong></div>
+
+  <div id="countdownArea">
+    <div class="countdown">
+      <div class="unit"><div class="digit-box" id="daysBox"><span id="days">00</span></div><div class="label">Days</div></div>
+      <div class="unit"><div class="digit-box" id="hoursBox"><span id="hours">00</span></div><div class="label">Hours</div></div>
+      <div class="unit"><div class="digit-box" id="minutesBox"><span id="minutes">00</span></div><div class="label">Minutes</div></div>
+      <div class="unit"><div class="digit-box" id="secondsBox"><span id="seconds">00</span></div><div class="label">Seconds</div></div>
+    </div>
+    <div class="progress-section">
+      <div class="bubbles" id="bubbles"></div>
+      <div class="progress-label" id="progressLabel"></div>
+    </div>
+  </div>
+
+  <div class="active-exam-card" id="examProgressCard">
+    <h2>Exams In Progress</h2>
+    <div class="day-counter" id="currentExamDay">Day 1 of 8</div>
+    <p>Stay focused, read carefully, and execute your strategy. You've got this.</p>
+  </div>
+
+  <div class="done-card" id="doneCard">
+    <h2>Congratulations!</h2>
+    <p>The hard work is over. Surulere JSS is incredibly proud of your dedication and effort. Enjoy your well-deserved rest!</p>
+  </div>
+
+  <div class="quote-card">
+    <div class="quote-text" id="quoteText"></div>
+  </div>
+
+  <div class="checklist-card">
+    <div class="checklist-title">
+      Revision Masterlist
+      <span style="color: var(--gold); font-size: 1.2rem;">🏆</span>
+    </div>
+    <div class="checklist-grid" id="checklistGrid"></div>
+    <div class="meter"><div class="meter-fill" id="meterFill"></div></div>
+    <div class="checklist-foot">
+      <span id="checklistCount">0 of 0 revised</span>
+      <button id="clearChecklist">Reset Progress</button>
+    </div>
+  </div>
+
+  <details class="timetable-card">
+    <summary>Full Lagos State BECE Timetable</summary>
+    <div class="ttable-wrap">
+      <table class="ttable">
+        <thead>
+          <tr><th>Day / Date</th><th>Subject</th><th>Duration</th><th>Time</th></tr>
+        </thead>
+        <tbody>
+          <tr><td>Mon 29 Jun</td><td>Pre-Vocational Studies</td><td>2 hrs</td><td>9:00–11:00am</td></tr>
+          <tr><td>Mon 29 Jun</td><td>Nigerian Languages</td><td>2 hrs</td><td>12:10–2:10pm</td></tr>
+          <tr><td>Tue 30 Jun</td><td>English Studies (Obj/Theory)</td><td>2h 30m</td><td>9:00–12:00pm</td></tr>
+          <tr><td>Tue 30 Jun</td><td>History</td><td>2 hrs</td><td>12:10–2:10pm</td></tr>
+          <tr><td>Wed 1 Jul</td><td>French</td><td>2 hrs</td><td>9:00–11:00am</td></tr>
+          <tr><td>Wed 1 Jul</td><td>Cultural & Creative Art</td><td>2 hrs</td><td>12:10–2:10pm</td></tr>
+          <tr><td>Thu 2 Jul</td><td>Basic Science & Tech</td><td>2 hrs</td><td>9:00–11:00am</td></tr>
+          <tr><td>Thu 2 Jul</td><td>National Value Education</td><td>2 hrs</td><td>12:10–2:10pm</td></tr>
+          <tr><td>Fri 3 Jul</td><td>Business Studies</td><td>2 hrs</td><td>9:00–11:00am</td></tr>
+          <tr><td>Fri 3 Jul</td><td>CRS / Islamic Studies</td><td>2 hrs</td><td>12:10–2:10pm</td></tr>
+          <tr><td>Mon 6 Jul</td><td>Mathematics (Obj/Theory)</td><td>2h 30m</td><td>9:00–12:00pm</td></tr>
+          <tr><td>Mon 6 Jul</td><td>Arabic Studies</td><td>2 hrs</td><td>12:10–2:10pm</td></tr>
+        </tbody>
+      </table>
+    </div>
+  </details>
+
+  <footer>Surulere Junior Secondary School — Executing greatness.</footer>
+</div>
+
+<script>
+(function(){
+  const $ = id => document.getElementById(id);
+  
+  // Real Local Storage for persisting checklist data permanently
+  function loadValue(key, fallback){
+    try {
+      const stored = localStorage.getItem(key);
+      return stored !== null ? JSON.parse(stored) : fallback;
+    } catch(e) { return fallback; }
+  }
+  function saveValue(key, value){
+    try { localStorage.setItem(key, JSON.stringify(value)); } catch(e) {}
+  }
+
+  // Official Fixed Exam Dates
+  const examStart = new Date("2026-06-29T09:00:00");
+  const examEnd = new Date("2026-07-06T14:10:00");
+  
+  let totalWeeks = 1;
+  let tickHandle = null;
+  let prevValues = {d:null, h:null, m:null};
+
+  function setBaseline(){
+    const now = new Date();
+    const days = Math.max(0, (examStart - now) / 86400000);
+    totalWeeks = Math.min(20, Math.max(1, Math.ceil(days / 7)));
+  }
+
+  function wipe(boxId, oldVal, newVal){
+    if(oldVal === newVal) return;
+    const box = $(boxId);
+    box.classList.remove('wipe');
+    void box.offsetWidth; 
+    box.classList.add('wipe');
+  }
+
+  function renderBubbles(weeksElapsed){
+    const container = $('bubbles');
+    if(container.childElementCount !== totalWeeks){
+      container.innerHTML = '';
+      for(let i=0; i<totalWeeks; i++){
+        const b = document.createElement('span');
+        b.className = 'bubble';
+        container.appendChild(b);
+      }
+    }
+    [...container.children].forEach((b, i) => {
+      b.classList.toggle('filled', i < weeksElapsed);
+    });
+  }
+
+  function tick(){
+    const now = new Date();
+
+    // Phase 3: Exams completely finished
+    if (now > examEnd) {
+      $('countdownArea').style.display = 'none';
+      $('examProgressCard').style.display = 'none';
+      $('doneCard').style.display = 'block';
+      if(tickHandle) clearInterval(tickHandle);
+      return;
+    }
+
+    // Phase 2: Exams currently happening (June 29 - July 6)
+    if (now >= examStart && now <= examEnd) {
+      $('countdownArea').style.display = 'none';
+      $('doneCard').style.display = 'none';
+      $('examProgressCard').style.display = 'block';
+      
+      // Calculate day of the exam period (Day 1 to 8)
+      const startDateOnly = new Date(examStart.getFullYear(), examStart.getMonth(), examStart.getDate());
+      const nowDateOnly = new Date(now.getFullYear(), now.getMonth(), now.getDate());
+      const dayDiff = Math.floor((nowDateOnly - startDateOnly) / 86400000) + 1;
+      
+      $('currentExamDay').textContent = `Day ${dayDiff} of 8`;
+      return;
+    }
+
+    // Phase 1: Countdown Mode
+    $('countdownArea').style.display = 'block';
+    $('examProgressCard').style.display = 'none';
+    $('doneCard').style.display = 'none';
+
+    const distance = examStart - now;
+    const d = Math.floor(distance / 86400000);
+    const h = Math.floor((distance % 86400000) / 3600000);
+    const m = Math.floor((distance % 3600000) / 60000);
+    const s = Math.floor((distance % 60000) / 1000);
+
+    wipe('daysBox', prevValues.d, d);
+    wipe('hoursBox', prevValues.h, h);
+    wipe('minutesBox', prevValues.m, m);
+
+    $('days').textContent = String(d).padStart(2,'0');
+    $('hours').textContent = String(h).padStart(2,'0');
+    $('minutes').textContent = String(m).padStart(2,'0');
+    $('seconds').textContent = String(s).padStart(2,'0');
+
+    prevValues = {d, h, m};
+
+    const weeksRemaining = Math.ceil(d / 7);
+    const weeksElapsed = Math.min(totalWeeks, Math.max(0, totalWeeks - weeksRemaining));
+    renderBubbles(weeksElapsed);
+    $('progressLabel').innerHTML = `Week <strong>${weeksElapsed}</strong> of ${totalWeeks} mapped · <strong>${d}</strong> day${d === 1 ? '' : 's'} to go`;
+  }
+
+  function startTicking(){
+    if(tickHandle) clearInterval(tickHandle);
+    setBaseline();
+    tick();
+    tickHandle = setInterval(tick, 1000);
+  }
+
+  // Auto Quotes
+  const quotes = [
+    "Every paper you've practiced is a rehearsal for the real thing.",
+    "You don't need to know everything — just enough, incredibly well.",
+    "Slow, careful reading beats fast, careless reading. Every time.",
+    "Mistakes in your mocks were lessons. You already paid for them.",
+    "Tired today, prepared tomorrow. Rest is a crucial part of revision.",
+    "One subject at a time. One paper at a time. One question at a time."
+  ];
+  let qi = Math.floor(Math.random() * quotes.length);
+  function renderQuote(){ 
+    $('quoteText').style.opacity = 0;
+    setTimeout(() => {
+      $('quoteText').textContent = quotes[qi]; 
+      $('quoteText').style.transition = 'opacity 0.5s ease';
+      $('quoteText').style.opacity = 1;
+    }, 200);
+  }
+  setInterval(()=>{ qi=(qi+1)%quotes.length; renderQuote(); }, 8000);
+  renderQuote();
+
+  // Revision Checklist Engine (Saved to Local Storage)
+  const subjects = [
+    "Pre-Vocational Studies (PVS)", "Nigerian Languages",
+    "English Studies", "History", "French", "Cultural & Creative Art (CCA)",
+    "Basic Science & Technology", "National Value Education",
+    "Business Studies", "CRS / Islamic Studies", "Mathematics", "Arabic Studies"
+  ];
+  let checked = loadValue('bece-checklist-real', {});
+
+  function renderChecklist(){
+    const grid = $('checklistGrid');
+    grid.innerHTML = '';
+    subjects.forEach((subj, i) => {
+      const row = document.createElement('label');
+      row.className = `check-row ${checked[i] ? 'completed' : ''}`;
+      
+      const cb = document.createElement('input');
+      cb.type = 'checkbox';
+      cb.checked = !!checked[i];
+      
+      cb.addEventListener('change', () => {
+        checked[i] = cb.checked;
+        row.className = `check-row ${cb.checked ? 'completed' : ''}`;
+        saveValue('bece-checklist-real', checked);
+        updateChecklistMeta(true);
+      });
+      
+      const span = document.createElement('span');
+      span.textContent = subj;
+      
+      row.appendChild(cb);
+      row.appendChild(span);
+      grid.appendChild(row);
+    });
+    updateChecklistMeta(false);
+  }
+
+  function updateChecklistMeta(animate){
+    const total = subjects.length;
+    const done = Object.values(checked).filter(Boolean).length;
+    $('checklistCount').textContent = `${done} of ${total} subjects revised`;
+    
+    const fill = $('meterFill');
+    fill.style.width = `${(done / total) * 100}%`;
+    
+    if(animate) {
+      fill.classList.remove('pulse');
+      void fill.offsetWidth; 
+      fill.classList.add('pulse');
+    }
+  }
+
+  $('clearChecklist').addEventListener('click', () => {
+    if(confirm("Are you sure you want to reset your revision progress?")) {
+      checked = {};
+      saveValue('bece-checklist-real', checked);
+      renderChecklist();
+    }
+  });
+
+  // Initialization
+  startTicking();
+  renderChecklist();
+
+})();
+</script>
+</body>
+</html>
