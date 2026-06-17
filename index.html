@@ -29,7 +29,7 @@
     justify-content: center;
     padding: 2.5rem 1.25rem;
   }
-  .wrap { width: 100%; max-width: 660px; position: relative; }
+  .wrap { width: 100%; max-width: 680px; position: relative; }
 
   .badge {
     width: 62px; height: 62px;
@@ -165,7 +165,7 @@
   .timetable-card[open] summary::after { content: '−'; }
   
   .ttable-wrap { overflow-x: auto; margin-top: 1rem; }
-  table.ttable { width: 100%; border-collapse: collapse; font-size: 0.88rem; min-width: 520px; }
+  table.ttable { width: 100%; border-collapse: collapse; font-size: 0.85rem; min-width: 580px; }
   table.ttable th { background: var(--navy); color: #fff; padding: 0.8rem; text-align: left; font-weight: 600; }
   table.ttable td { padding: 0.6rem 0.8rem; border-bottom: 1px solid var(--mist); vertical-align: middle; }
   table.ttable tr:last-child td { border-bottom: none; }
@@ -173,8 +173,11 @@
   table.ttable tr:hover td { background: var(--mist); }
   
   .day-col { font-weight: 700; color: var(--royal); white-space: nowrap; border-right: 2px solid var(--mist); }
-  .sub { padding: 0.4rem 0; }
-  .sub:first-child { border-bottom: 1px dashed #b9cce4; margin-bottom: 0.2rem; padding-bottom: 0.5rem; }
+  .code-text { font-family: 'Space Grotesk', sans-serif; font-weight: 500; color: #555; text-align: center; }
+  .sub { padding: 0.45rem 0; }
+  .sub.split { border-bottom: 1px dashed #c0d3eb; }
+  .sub.triple { font-size: 0.78rem; opacity: 0.85; padding: 0.1rem 0; }
+  .sub.triple-title { font-weight: 600; padding-bottom: 0; }
 
   .credit-session { text-align: center; margin: 2rem 0 0.5rem; font-size: 0.78rem; letter-spacing: 0.08em; text-transform: uppercase; color: var(--navy); font-weight: 600; opacity: 0.9; }
   .credit-session span { color: var(--gold); font-family: 'Space Grotesk', sans-serif; font-weight: 700; border-left: 2px solid var(--mist); padding-left: 6px; margin-left: 4px; }
@@ -229,49 +232,141 @@
     <div class="quote-text" id="quoteText"></div>
   </div>
 
-  <details class="timetable-card" id="timetableCard">
-    <summary>Our Shared Revision Timetable</summary>
+  <details class="timetable-card" id="timetableCard" open>
+    <summary>Official Lagos State BECE Timetable</summary>
     <div class="ttable-wrap">
       <table class="ttable">
         <thead>
-          <tr><th>Day / Date</th><th>Subjects</th><th>Duration</th><th>Time</th></tr>
+          <tr><th>Day / Date</th><th>Paper / Subject</th><th style="text-align:center">Code</th><th>Duration</th><th>Time</th></tr>
         </thead>
         <tbody>
           <tr>
             <td class="day-col">Mon 29 Jun</td>
-            <td><div class="sub">Pre-Vocational Studies</div><div class="sub">Nigerian Languages</div></td>
-            <td><div class="sub">2 hrs</div><div class="sub">2 hrs</div></td>
-            <td><div class="sub">9:00–11:00am</div><div class="sub">12:10–2:10pm</div></td>
+            <td>
+              <div class="sub split">Pre-Vocational Studies (PVS)</div>
+              <div class="sub triple-title">Nigerian Languages</div>
+              <div class="sub triple">Yoruba</div>
+              <div class="sub triple">Igbo</div>
+              <div class="sub triple">Hausa</div>
+            </td>
+            <td class="code-text">
+              <div class="sub split">001</div>
+              <div class="sub triple-title">&nbsp;</div>
+              <div class="sub triple">002</div>
+              <div class="sub triple">003</div>
+              <div class="sub triple">004</div>
+            </td>
+            <td>
+              <div class="sub split">2 Hours</div>
+              <div class="sub">2 Hours</div>
+            </td>
+            <td>
+              <div class="sub split">9:00AM – 11:00AM</div>
+              <div class="sub">12:10PM – 2:10PM</div>
+            </td>
           </tr>
           <tr>
             <td class="day-col">Tue 30 Jun</td>
-            <td><div class="sub">English Studies (Obj/Theory)</div><div class="sub">History</div></td>
-            <td><div class="sub">2h 30m</div><div class="sub">2 hrs</div></td>
-            <td><div class="sub">9:00–12:30pm</div><div class="sub">1:00–3:00pm</div></td>
+            <td>
+              <div class="sub split">English Studies (OBJ)</div>
+              <div class="sub split">English Studies (THEORY)</div>
+              <div class="sub">History</div>
+            </td>
+            <td class="code-text">
+              <div class="sub split">005</div>
+              <div class="sub split">005</div>
+              <div class="sub">006</div>
+            </td>
+            <td>
+              <div class="sub split">1 Hour</div>
+              <div class="sub split">1:30 Mins</div>
+              <div class="sub">2 Hours</div>
+            </td>
+            <td>
+              <div class="sub split">9:00AM – 10:00AM</div>
+              <div class="sub split">10:30AM – 12:00PM</div>
+              <div class="sub">12:10PM – 2:10PM</div>
+            </td>
           </tr>
           <tr>
             <td class="day-col">Wed 1 Jul</td>
-            <td><div class="sub">French</div><div class="sub">Cultural & Creative Art</div></td>
-            <td><div class="sub">2 hrs</div><div class="sub">2 hrs</div></td>
-            <td><div class="sub">9:00–11:00am</div><div class="sub">12:10–2:10pm</div></td>
+            <td>
+              <div class="sub split">French</div>
+              <div class="sub">Cultural & Creative Art (CCA)</div>
+            </td>
+            <td class="code-text">
+              <div class="sub split">007</div>
+              <div class="sub">008</div>
+            </td>
+            <td>
+              <div class="sub split">2 Hours</div>
+              <div class="sub">2 Hours</div>
+            </td>
+            <td>
+              <div class="sub split">9:00AM – 11:00AM</div>
+              <div class="sub">12:10PM – 2:10PM</div>
+            </td>
           </tr>
           <tr>
             <td class="day-col">Thu 2 Jul</td>
-            <td><div class="sub">Basic Science & Tech</div><div class="sub">National Value Education</div></td>
-            <td><div class="sub">2 hrs</div><div class="sub">2 hrs</div></td>
-            <td><div class="sub">9:00–11:00am</div><div class="sub">12:10–2:10pm</div></td>
+            <td>
+              <div class="sub split">Basic Science & Technology (BST)</div>
+              <div class="sub">National Value Education (NVE)</div>
+            </td>
+            <td class="code-text">
+              <div class="sub split">009</div>
+              <div class="sub">010</div>
+            </td>
+            <td>
+              <div class="sub split">2 Hours</div>
+              <div class="sub">2 Hours</div>
+            </td>
+            <td>
+              <div class="sub split">9:00AM – 11:00AM</div>
+              <div class="sub">12:10PM – 2:10PM</div>
+            </td>
           </tr>
           <tr>
             <td class="day-col">Fri 3 Jul</td>
-            <td><div class="sub">Business Studies</div><div class="sub">CRS / Islamic Studies</div></td>
-            <td><div class="sub">2 hrs</div><div class="sub">2 hrs</div></td>
-            <td><div class="sub">9:00–11:00am</div><div class="sub">12:10–2:10pm</div></td>
+            <td>
+              <div class="sub split">Business Studies</div>
+              <div class="sub">CRS / Islamic Studies</div>
+            </td>
+            <td class="code-text">
+              <div class="sub split">011</div>
+              <div class="sub">012 / 013</div>
+            </td>
+            <td>
+              <div class="sub split">2 Hours</div>
+              <div class="sub">2 Hours</div>
+            </td>
+            <td>
+              <div class="sub split">9:00AM – 11:00AM</div>
+              <div class="sub">12:10PM – 2:10PM</div>
+            </td>
           </tr>
           <tr>
             <td class="day-col">Mon 6 Jul</td>
-            <td><div class="sub">Mathematics (Obj/Theory)</div><div class="sub">Arabic Studies</div></td>
-            <td><div class="sub">2h 30m</div><div class="sub">2 hrs</div></td>
-            <td><div class="sub">9:00–12:30pm</div><div class="sub">1:00–3:00pm</div></td>
+            <td>
+              <div class="sub split">Mathematics (OBJ)</div>
+              <div class="sub split">Mathematics (THEORY)</div>
+              <div class="sub">Arabic Studies</div>
+            </td>
+            <td class="code-text">
+              <div class="sub split">014</div>
+              <div class="sub split">014</div>
+              <div class="sub">015</div>
+            </td>
+            <td>
+              <div class="sub split">1 Hour</div>
+              <div class="sub split">1:30 Mins</div>
+              <div class="sub">2 Hours</div>
+            </td>
+            <td>
+              <div class="sub split">9:00AM – 10:00AM</div>
+              <div class="sub split">10:30AM – 12:00PM</div>
+              <div class="sub">12:10PM – 2:10PM</div>
+            </td>
           </tr>
         </tbody>
       </table>
