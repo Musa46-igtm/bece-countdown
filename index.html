@@ -4,13 +4,17 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Surulere JSS — BECE Student Companion</title>
+<meta name="description" content="Countdown, daily schedule, and full Lagos State BECE timetable for JSS3 students.">
 
 <link rel="manifest" href="manifest.json">
 <meta name="theme-color" content="#1D4FA3">
 <meta name="apple-mobile-web-app-capable" content="yes">
 <meta name="apple-mobile-web-app-status-bar-style" content="default">
+<meta name="apple-mobile-web-app-title" content="BECE Companion">
+<link rel="apple-touch-icon" href="icons/icon-192.png">
+<link rel="icon" type="image/png" sizes="192x192" href="icons/icon-192.png">
+<link rel="icon" type="image/png" sizes="512x512" href="icons/icon-512.png">
 
-<link rel="icon" type="image/svg+xml" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='%231D4FA3'%3E%3Cpath d='M12 2L1 7l11 5 11-5-11-5z'/%3E%3Cpath d='M4.5 9.5V15a7.5 7.5 0 0015 0V9.5l-7.5 3.4-7.5-3.4z'/%3E%3Cpath d='M22 8.5v6c0 .8-.5 1.5-1 1.5s-1-.7-1-1.5v-6c0-.8.5-1.5 1-1.5s1 .7 1 1.5z' fill='%23C9A227'/%3E%3C/svg%3E">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Dancing+Script:wght@600;700&family=Playfair+Display:ital,wght@0,600;1,600&family=Space+Grotesk:wght@500;700&family=Work+Sans:wght@400;500;600&display=swap" rel="stylesheet">
@@ -718,7 +722,7 @@
 
 if ("serviceWorker" in navigator) {
   window.addEventListener("load", () => {
-    navigator.serviceWorker.register("/sw.js")
+    navigator.serviceWorker.register("sw.js")
       .then(() => console.log("Service Worker Registered"))
       .catch(err => console.error("Service Worker Failed", err));
   });
