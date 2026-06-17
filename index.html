@@ -474,18 +474,65 @@
     }
   }
 
-  // Initialize Next Paper Data
-  function setupNextPaperWidget() {
-    const nextData = timetableData[0];
-    const firstPaper = nextData.papers[0];
-    $('nextPaperDetails').innerHTML = `
+  // ---------------------------------------------------------
+  // NEXT PAPER LOGIC (now fully dynamic, not pinned to Day 1)
+  // ---------------------------------------------------------
+  // Flatten every paper across every day into one chronological list,
+  // each carrying a real timestamp so we can always find whichever
+  // paper is genuinely "next" — whether that's tomorrow's first paper
+  // or the first paper after a weekend gap.
+  function parseLagosTime(dateId, timeStr){
+    const match = timeStr.match(/(\d+):(\d+)(AM|PM)/i);
+    if(!match) return null;
+    let hour = parseInt(match[1], 10);
+    const minute = parseInt(match[2], 10);
+    const meridiem = match[3].toUpperCase();
+    if(meridiem === 'PM' && hour !== 12) hour += 12;
+    if(meridiem === 'AM' && hour === 12) hour = 0;
+    const hh = String(hour).padStart(2,'0');
+    const mm = String(minute).padStart(2,'0');
+    return new Date(`${dateId}T${hh}:${mm}:00+01:00`).getTime();
+  }
+
+  function buildFlatPapers(){
+    const list = [];
+    timetableData.forEach(day => {
+      day.papers.forEach(p => {
+        const startStr = p.time.split('–')[0].trim();
+        list.push({
+          dateId: day.dateId,
+          dayLabel: day.dayLabel,
+          name: p.name,
+          code: p.code,
+          time: p.time,
+          startTimestamp: parseLagosTime(day.dateId, startStr)
+        });
+      });
+    });
+    return list.sort((a, b) => a.startTimestamp - b.startTimestamp);
+  }
+
+  const flatPapers = buildFlatPapers();
+
+  function getNextPaper(now){
+    return flatPapers.find(p => p.startTimestamp > now) || null;
+  }
+
+  function updateNextPaperWidget(now){
+    const next = getNextPaper(now);
+    const widget = $('nextPaperWidget');
+    const details = $('nextPaperDetails');
+    if(!next){
+      widget.style.display = 'none';
+      return;
+    }
+    details.innerHTML = `
       <div class="next-item">
-        <div class="t-name">${firstPaper.name}</div>
-        <div class="next-date">${nextData.dayLabel} • ${firstPaper.time.split('–')[0].trim()}</div>
+        <div class="t-name">${next.name}</div>
+        <div class="next-date">${next.dayLabel} • ${next.time.split('–')[0].trim()}</div>
       </div>
     `;
   }
-  setupNextPaperWidget();
 
   // ---------------------------------------------------------
   // MAIN COUNTDOWN ENGINE
@@ -530,7 +577,6 @@
     } else if (now >= examStart && now <= examEnd) {
       $('countdownDigits').style.display = 'none';
       $('examlineText').style.display = 'none';
-      $('nextPaperWidget').style.display = 'none';
       $('progressSection').style.display = 'none';
       $('examProgressCard').style.display = 'block';
       $('doneCard').style.display = 'none';
@@ -545,22 +591,29 @@
           $('currentExamDay').textContent = `Day ${dayIndex + 1} of 6`;
           $('examProgressDesc').textContent = "Stay focused, read carefully, and execute your strategy. You've got this.";
           $('currentExamDay').style.fontSize = '3.5rem';
+          // Today's Papers widget already covers today — no need to repeat it here
+          $('nextPaperWidget').style.display = 'none';
       } else {
           $('examProgressTitle').textContent = "Recovery Period";
           $('currentExamDay').textContent = "Weekend Rest";
           $('examProgressDesc').textContent = "Take a breath. Rest your mind before the final push on Monday.";
           $('currentExamDay').style.fontSize = '2.5rem';
+          // No paper today (weekend gap) — surface what's coming up next
+          updateNextPaperWidget(now);
+          $('nextPaperWidget').style.display = 'block';
       }
       
     } else {
       $('countdownDigits').style.display = 'flex';
       $('examlineText').style.display = 'block';
-      $('nextPaperWidget').style.display = 'block';
       $('progressSection').style.display = 'block';
       $('examProgressCard').style.display = 'none';
       $('doneCard').style.display = 'none';
       $('quoteCard').style.display = 'block';
       $('timetableCard').style.display = 'block';
+
+      updateNextPaperWidget(now);
+      $('nextPaperWidget').style.display = 'block';
 
       const weeksRemaining = Math.ceil(d / 7);
       const weeksElapsed = Math.min(totalWeeks, Math.max(0, totalWeeks - weeksRemaining));
@@ -615,10 +668,26 @@
   let deferredPrompt;
   const installBtn = $('installBtn');
 
+  // Detects whether the page is currently being run as the installed
+  // app itself (not just "is it installable"), across Android/desktop
+  // Chrome (display-mode: standalone) and iOS Safari (navigator.standalone).
+  function isRunningAsInstalledApp(){
+    return window.matchMedia('(display-mode: standalone)').matches ||
+           window.matchMedia('(display-mode: window-controls-overlay)').matches ||
+           window.navigator.standalone === true ||
+           document.referrer.startsWith('android-app://');
+  }
+
+  // If we're already running as the installed app, never show the button.
+  if (installBtn && isRunningAsInstalledApp()) {
+    installBtn.hidden = true;
+  }
+
   window.addEventListener('beforeinstallprompt', (e) => {
     e.preventDefault();
     deferredPrompt = e;
-    if(installBtn) {
+    // Extra guard: some browsers can still fire this even when installed
+    if (installBtn && !isRunningAsInstalledApp()) {
       installBtn.hidden = false;
       installBtn.addEventListener('click', async () => {
         installBtn.hidden = true;
@@ -632,7 +701,14 @@
 
   window.addEventListener('appinstalled', () => {
     if(installBtn) installBtn.hidden = true;
+    deferredPrompt = null;
     console.log('PWA installed successfully');
+  });
+
+  // Some browsers flip display-mode to standalone right after install
+  // without a full page reload — keep the button in sync if that happens.
+  window.matchMedia('(display-mode: standalone)').addEventListener('change', (e) => {
+    if (e.matches && installBtn) installBtn.hidden = true;
   });
 
 })();
