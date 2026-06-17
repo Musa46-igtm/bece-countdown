@@ -15,7 +15,6 @@
     --navy: #0A2647;
     --gold: #C9A227;
     --mist: #DCE8F7;
-    --success: #28a745;
   }
   * { box-sizing: border-box; }
   body {
@@ -160,47 +159,13 @@
   @keyframes fadeIn { from { opacity: 0; transform: translateY(10px); } to { opacity: 1; transform: translateY(0); } }
 
   /* Cards */
-  .quote-card, .checklist-card, .timetable-card {
+  .quote-card, .timetable-card {
     background: var(--white); border-radius: 10px;
     border: 1px solid var(--mist); padding: 1.3rem 1.5rem;
     margin-bottom: 1.6rem; box-shadow: 0 4px 12px rgba(10, 38, 71, 0.03);
   }
   .quote-card { text-align: center; }
   .quote-text { font-size: 1rem; font-weight: 500; min-height: 2.6em; display: flex; align-items: center; justify-content: center; }
-  
-  .checklist-title, .timetable-title {
-    font-size: 0.85rem; text-transform: uppercase; letter-spacing: 0.08em;
-    color: var(--royal); margin-bottom: 1rem; font-weight: 700;
-    display: flex; justify-content: space-between; align-items: center;
-  }
-  .checklist-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 0.8rem 1rem; }
-  .check-row {
-    display: flex; align-items: center; gap: 0.6rem; font-size: 0.88rem;
-    cursor: pointer; padding: 0.4rem; border-radius: 6px; transition: background 0.2s;
-  }
-  .check-row:hover { background: var(--paper); }
-  .check-row input {
-    appearance: none; width: 20px; height: 20px;
-    border: 2px solid var(--royal); border-radius: 4px;
-    cursor: pointer; position: relative; transition: 0.2s;
-  }
-  .check-row input:checked { background: var(--royal); border-color: var(--royal); }
-  .check-row input:checked::after {
-    content: '✓'; position: absolute; color: white;
-    font-size: 14px; top: -1px; left: 3px; font-weight: bold;
-  }
-  .check-row.completed span { text-decoration: line-through; color: #888; }
-  
-  .meter { height: 8px; border-radius: 4px; background: var(--mist); margin: 1.2rem 0 0.6rem; overflow: hidden; }
-  .meter-fill { height: 100%; background: var(--gold); width: 0%; transition: width 0.5s cubic-bezier(0.4, 0, 0.2, 1); }
-  .meter-fill.pulse { animation: pulseBg 0.5s ease; }
-  @keyframes pulseBg { 0% { filter: brightness(1); } 50% { filter: brightness(1.3); } 100% { filter: brightness(1); } }
-  
-  .checklist-foot { display: flex; justify-content: space-between; align-items: center; font-size: 0.82rem; color: var(--navy); font-weight: 500; }
-  .checklist-foot button {
-    background: none; border: none; color: var(--royal); cursor: pointer;
-    font-family: inherit; font-size: 0.82rem; text-decoration: underline; padding: 0; font-weight: 600;
-  }
 
   .timetable-card summary { cursor: pointer; font-weight: 700; color: var(--royal); list-style: none; display: flex; justify-content: space-between; align-items: center; }
   .timetable-card summary::-webkit-details-marker { display: none; }
@@ -213,19 +178,38 @@
   table.ttable tr:nth-child(even) td { background: var(--paper); }
   table.ttable tr:hover td { background: var(--mist); }
 
-  footer { text-align: center; font-size: 0.8rem; font-weight: 500; color: var(--royal); margin-top: 1rem; opacity: 0.8; }
+  /* Author Credit Section */
+  .credit-session {
+    text-align: center;
+    margin: 2rem 0 0.5rem;
+    font-size: 0.78rem;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    color: var(--navy);
+    font-weight: 600;
+    opacity: 0.9;
+  }
+  .credit-session span {
+    color: var(--gold);
+    font-family: 'Space Grotesk', sans-serif;
+    font-weight: 700;
+    border-left: 2px solid var(--mist);
+    padding-left: 6px;
+    margin-left: 4px;
+  }
+
+  footer { text-align: center; font-size: 0.78rem; font-weight: 500; color: var(--royal); opacity: 0.7; }
   :focus-visible { outline: 2px solid var(--gold); outline-offset: 2px; }
 
   @media (max-width: 480px) {
     h1 { font-size: 2.5rem; }
     .digit-box { min-width: 58px; padding: 0.4rem 0.2rem; }
     .digit-box span { font-size: 1.7rem; }
-    .checklist-grid { grid-template-columns: 1fr; gap: 0.2rem; }
     .active-exam-card .day-counter { font-size: 2.8rem; }
   }
 
   @media (prefers-reduced-motion: reduce) {
-    .digit-box::after, .meter-fill { transition: none; animation: none; }
+    .digit-box::after { transition: none; animation: none; }
   }
 </style>
 </head>
@@ -268,19 +252,6 @@
     <div class="quote-text" id="quoteText"></div>
   </div>
 
-  <div class="checklist-card">
-    <div class="checklist-title">
-      Revision Masterlist
-      <span style="color: var(--gold); font-size: 1.2rem;">🏆</span>
-    </div>
-    <div class="checklist-grid" id="checklistGrid"></div>
-    <div class="meter"><div class="meter-fill" id="meterFill"></div></div>
-    <div class="checklist-foot">
-      <span id="checklistCount">0 of 0 revised</span>
-      <button id="clearChecklist">Reset Progress</button>
-    </div>
-  </div>
-
   <details class="timetable-card">
     <summary>Full Lagos State BECE Timetable</summary>
     <div class="ttable-wrap">
@@ -306,23 +277,14 @@
     </div>
   </details>
 
+  <div class="credit-session">Engineered for Success <span>Made by Musa</span></div>
+  
   <footer>Surulere Junior Secondary School — Executing greatness.</footer>
 </div>
 
 <script>
 (function(){
   const $ = id => document.getElementById(id);
-  
-  // Real Local Storage for persisting checklist data permanently
-  function loadValue(key, fallback){
-    try {
-      const stored = localStorage.getItem(key);
-      return stored !== null ? JSON.parse(stored) : fallback;
-    } catch(e) { return fallback; }
-  }
-  function saveValue(key, value){
-    try { localStorage.setItem(key, JSON.stringify(value)); } catch(e) {}
-  }
 
   // Official Fixed Exam Dates
   const examStart = new Date("2026-06-29T09:00:00");
@@ -379,7 +341,6 @@
       $('doneCard').style.display = 'none';
       $('examProgressCard').style.display = 'block';
       
-      // Calculate day of the exam period (Day 1 to 8)
       const startDateOnly = new Date(examStart.getFullYear(), examStart.getMonth(), examStart.getDate());
       const nowDateOnly = new Date(now.getFullYear(), now.getMonth(), now.getDate());
       const dayDiff = Math.floor((nowDateOnly - startDateOnly) / 86400000) + 1;
@@ -444,69 +405,8 @@
   setInterval(()=>{ qi=(qi+1)%quotes.length; renderQuote(); }, 8000);
   renderQuote();
 
-  // Revision Checklist Engine (Saved to Local Storage)
-  const subjects = [
-    "Pre-Vocational Studies (PVS)", "Nigerian Languages",
-    "English Studies", "History", "French", "Cultural & Creative Art (CCA)",
-    "Basic Science & Technology", "National Value Education",
-    "Business Studies", "CRS / Islamic Studies", "Mathematics", "Arabic Studies"
-  ];
-  let checked = loadValue('bece-checklist-real', {});
-
-  function renderChecklist(){
-    const grid = $('checklistGrid');
-    grid.innerHTML = '';
-    subjects.forEach((subj, i) => {
-      const row = document.createElement('label');
-      row.className = `check-row ${checked[i] ? 'completed' : ''}`;
-      
-      const cb = document.createElement('input');
-      cb.type = 'checkbox';
-      cb.checked = !!checked[i];
-      
-      cb.addEventListener('change', () => {
-        checked[i] = cb.checked;
-        row.className = `check-row ${cb.checked ? 'completed' : ''}`;
-        saveValue('bece-checklist-real', checked);
-        updateChecklistMeta(true);
-      });
-      
-      const span = document.createElement('span');
-      span.textContent = subj;
-      
-      row.appendChild(cb);
-      row.appendChild(span);
-      grid.appendChild(row);
-    });
-    updateChecklistMeta(false);
-  }
-
-  function updateChecklistMeta(animate){
-    const total = subjects.length;
-    const done = Object.values(checked).filter(Boolean).length;
-    $('checklistCount').textContent = `${done} of ${total} subjects revised`;
-    
-    const fill = $('meterFill');
-    fill.style.width = `${(done / total) * 100}%`;
-    
-    if(animate) {
-      fill.classList.remove('pulse');
-      void fill.offsetWidth; 
-      fill.classList.add('pulse');
-    }
-  }
-
-  $('clearChecklist').addEventListener('click', () => {
-    if(confirm("Are you sure you want to reset your revision progress?")) {
-      checked = {};
-      saveValue('bece-checklist-real', checked);
-      renderChecklist();
-    }
-  });
-
   // Initialization
   startTicking();
-  renderChecklist();
 
 })();
 </script>
