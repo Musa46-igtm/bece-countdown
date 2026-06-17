@@ -364,10 +364,21 @@
   const examStart = new Date("2026-06-29T09:00:00+01:00").getTime();
   const examEnd = new Date("2026-07-06T14:10:00+01:00").getTime();
   
-  // Formatter to strictly get the current date in Lagos, Nigeria
-  const lagosDateFormatter = new Intl.DateTimeFormat('en-CA', { 
-    timeZone: 'Africa/Lagos', year: 'numeric', month: '2-digit', day: '2-digit' 
-  });
+  // Robust method to extract YYYY-MM-DD reliably across all browsers for Lagos timezone
+  function getLagosDateString() {
+    const parts = new Intl.DateTimeFormat('en', {
+      timeZone: 'Africa/Lagos',
+      year: 'numeric',
+      month: '2-digit',
+      day: '2-digit'
+    }).formatToParts(new Date());
+
+    const year = parts.find(p => p.type === 'year').value;
+    const month = parts.find(p => p.type === 'month').value;
+    const day = parts.find(p => p.type === 'day').value;
+
+    return `${year}-${month}-${day}`;
+  }
 
   let totalWeeks = 1;
   let tickHandle = null;
@@ -407,7 +418,7 @@
   // TODAY'S PAPERS WIDGET LOGIC
   // ---------------------------------------------------------
   function updateTodayWidget() {
-    const todayLagosStr = lagosDateFormatter.format(new Date()); // e.g. "2026-06-29"
+    const todayLagosStr = getLagosDateString();
     const todayData = timetableData.find(d => d.dateId === todayLagosStr);
     
     if (todayData) {
@@ -462,7 +473,9 @@
       $('timetableCard').style.display = 'none';
       $('todayWidget').style.display = 'none';
       $('doneCard').style.display = 'block';
+      
       if(tickHandle) clearInterval(tickHandle);
+      if(quoteInterval) clearInterval(quoteInterval); // Cleanup memory
       
     } else if (now >= examStart && now <= examEnd) {
       // Phase 2: Exams currently happening
@@ -472,7 +485,7 @@
       $('quoteCard').style.display = 'block';
       $('timetableCard').style.display = 'block';
       
-      const todayLagosStr = lagosDateFormatter.format(new Date());
+      const todayLagosStr = getLagosDateString();
       const dayIndex = activeDates.indexOf(todayLagosStr);
       
       if (dayIndex !== -1) {
@@ -529,9 +542,13 @@
       }
     }, 200);
   }
-  setInterval(()=>{ qi=(qi+1)%quotes.length; renderQuote(); }, 8000);
+  
+  let quoteInterval = setInterval(()=>{ 
+    qi=(qi+1)%quotes.length; 
+    renderQuote(); 
+  }, 8000);
+  
   renderQuote();
-
   startTicking();
 })();
 </script>
