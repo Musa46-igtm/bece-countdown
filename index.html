@@ -153,6 +153,12 @@
     font-family: 'Space Grotesk', sans-serif;
     display: flex; align-items: center; justify-content: space-between;
   }
+  .widget-title-content {
+    display: inline-flex; align-items: center; gap: 0.5rem;
+  }
+  .widget-icon {
+    width: 20px; height: 20px; display: inline-block; vertical-align: middle;
+  }
   .today-item, .next-item {
     display: flex; justify-content: space-between; align-items: center;
     padding: 0.8rem 0; border-bottom: 1px dashed var(--mist);
@@ -194,12 +200,14 @@
 
   /* PWA Install Button */
   #installBtn {
-    display: block; width: 100%; background: var(--navy); color: var(--white);
+    display: inline-flex; align-items: center; justify-content: center; gap: 0.6rem;
+    width: 100%; background: var(--navy); color: var(--white);
     border: none; border-radius: 8px; padding: 1rem; font-family: 'Space Grotesk', sans-serif;
     font-size: 1rem; font-weight: 700; cursor: pointer; margin-bottom: 1.6rem;
     box-shadow: 0 4px 12px rgba(10, 38, 71, 0.15); transition: background 0.3s;
   }
   #installBtn:hover { background: var(--royal); }
+  #installBtn svg { width: 18px; height: 18px; fill: currentColor; }
 
   .credit-session { text-align: center; margin: 2rem 0 0.5rem; font-size: 0.78rem; letter-spacing: 0.08em; text-transform: uppercase; color: var(--navy); font-weight: 600; opacity: 0.9; }
   .credit-session span { color: var(--gold); font-family: 'Space Grotesk', sans-serif; font-weight: 700; border-left: 2px solid var(--mist); padding-left: 6px; margin-left: 4px; }
@@ -254,15 +262,29 @@
     <p>The examination cycle has officially come to an end! This support page and timetable are no longer active. Huge congratulations to all JSS3 students on executing their plans and completing their papers!</p>
   </div>
 
-  <button id="installBtn" hidden>📱 Install App to Home Screen</button>
+  <button id="installBtn" hidden>
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M17 1.01L7 1c-1.1 0-2 .9-2 2v18c0 1.1.9 2 2 2h10c1.1 0 2-.9 2-2V3c0-1.1-.9-1.99-2-1.99zM17 19H7V5h10v14zM12 18c.55 0 1-.45 1-1s-.45-1-1-1-1 .45-1 1 .45 1 1 1z"/></svg>
+    Install App
+  </button>
 
   <div class="next-paper-widget" id="nextPaperWidget">
-    <h3 class="widget-title">Next Paper ⏱️</h3>
+    <h3 class="widget-title">
+      <span class="widget-title-content">
+        Next Paper
+        <svg class="widget-icon" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="%231D4FA3"><path d="M15 1H9v2h6V1zm-4 13h2V8h-2v6zm8.03-6.61l1.42-1.42c-.43-.51-.9-.99-1.41-1.41l-1.42 1.42C16.07 4.74 14.12 4 12 4c-4.97 0-9 4.03-9 9s4.03 9 9 9 9-4.03 9-9c0-2.12-.74-4.07-1.97-5.61zM12 20c-3.87 0-7-3.13-7-7s3.13-7 7-7 7 3.13 7 7-3.13 7-7 7z" fill="#1D4FA3"/></svg>
+      </span>
+    </h3>
     <div id="nextPaperDetails"></div>
   </div>
 
   <div class="today-widget" id="todayWidget">
-    <h3 class="widget-title">Today's Papers ⚡ <span id="todayWidgetDate"></span></h3>
+    <h3 class="widget-title">
+      <span class="widget-title-content">
+        Today's Papers
+        <svg class="widget-icon" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="%23C9A227"><path d="M7 2v11h3v9l7-12h-4l4-8H7z" fill="#C9A227"/></svg>
+      </span>
+      <span id="todayWidgetDate"></span>
+    </h3>
     <div id="todayPapersList"></div>
   </div>
 
@@ -454,7 +476,6 @@
 
   // Initialize Next Paper Data
   function setupNextPaperWidget() {
-    // Finds the first paper chronologically (Assuming timetable is sorted)
     const nextData = timetableData[0];
     const firstPaper = nextData.papers[0];
     $('nextPaperDetails').innerHTML = `
@@ -491,9 +512,7 @@
     
     updateTodayWidget();
 
-    // UI Phases based on Timeline
     if (now > examEnd) {
-      // Phase 3: Exams completely finished
       $('countdownDigits').style.display = 'none';
       $('examlineText').style.display = 'none';
       $('lagosClock').style.display = 'none';
@@ -509,7 +528,6 @@
       if(quoteInterval) clearInterval(quoteInterval);
       
     } else if (now >= examStart && now <= examEnd) {
-      // Phase 2: Exams currently happening
       $('countdownDigits').style.display = 'none';
       $('examlineText').style.display = 'none';
       $('nextPaperWidget').style.display = 'none';
@@ -535,7 +553,6 @@
       }
       
     } else {
-      // Phase 1: Countdown Mode
       $('countdownDigits').style.display = 'flex';
       $('examlineText').style.display = 'block';
       $('nextPaperWidget').style.display = 'block';
@@ -620,9 +637,6 @@
 
 })();
 
-// ---------------------------------------------------------
-// PWA SERVICE WORKER REGISTRATION
-// ---------------------------------------------------------
 if ("serviceWorker" in navigator) {
   window.addEventListener("load", () => {
     navigator.serviceWorker.register("/sw.js")
