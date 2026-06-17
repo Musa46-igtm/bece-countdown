@@ -149,6 +149,31 @@
   .done-card .status-note { font-family: 'Space Grotesk', sans-serif; text-transform: uppercase; font-size: 0.8rem; letter-spacing: 0.1em; color: var(--gold); margin-bottom: 1rem; font-weight: 700; }
   .done-card p { color: var(--navy); margin: 0; font-size: 1.05rem; line-height: 1.6; }
 
+  /* Today's Papers Widget */
+  .today-widget {
+    display: none;
+    background: var(--white);
+    border-radius: 10px;
+    border-left: 5px solid var(--gold);
+    padding: 1.5rem;
+    margin-bottom: 1.6rem;
+    box-shadow: 0 4px 12px rgba(10, 38, 71, 0.05);
+    animation: fadeIn 0.8s ease;
+  }
+  .today-widget h3 {
+    margin: 0 0 1rem; color: var(--navy); font-size: 1.15rem;
+    font-family: 'Space Grotesk', sans-serif;
+    display: flex; align-items: center; justify-content: space-between;
+  }
+  .today-item {
+    display: flex; justify-content: space-between; align-items: center;
+    padding: 0.8rem 0; border-bottom: 1px dashed var(--mist);
+  }
+  .today-item:last-child { border-bottom: none; padding-bottom: 0; }
+  .t-time { font-weight: 700; color: var(--royal); font-size: 0.9rem; min-width: 140px; }
+  .t-name { flex-grow: 1; font-weight: 600; font-size: 0.95rem; line-height: 1.4; padding-right: 10px; }
+  .t-code { font-family: 'Space Grotesk', sans-serif; color: var(--navy); font-size: 0.8rem; font-weight: 700; background: var(--paper); padding: 0.25rem 0.5rem; border-radius: 4px; }
+
   @keyframes fadeIn { from { opacity: 0; transform: translateY(10px); } to { opacity: 1; transform: translateY(0); } }
 
   .quote-card, .timetable-card {
@@ -174,10 +199,8 @@
   
   .day-col { font-weight: 700; color: var(--royal); white-space: nowrap; border-right: 2px solid var(--mist); }
   .code-text { font-family: 'Space Grotesk', sans-serif; font-weight: 500; color: #555; text-align: center; }
-  .sub { padding: 0.45rem 0; }
+  .sub { padding: 0.45rem 0; line-height: 1.4; }
   .sub.split { border-bottom: 1px dashed #c0d3eb; }
-  .sub.triple { font-size: 0.78rem; opacity: 0.85; padding: 0.1rem 0; }
-  .sub.triple-title { font-weight: 600; padding-bottom: 0; }
 
   .credit-session { text-align: center; margin: 2rem 0 0.5rem; font-size: 0.78rem; letter-spacing: 0.08em; text-transform: uppercase; color: var(--navy); font-weight: 600; opacity: 0.9; }
   .credit-session span { color: var(--gold); font-family: 'Space Grotesk', sans-serif; font-weight: 700; border-left: 2px solid var(--mist); padding-left: 6px; margin-left: 4px; }
@@ -189,6 +212,8 @@
     .digit-box { min-width: 58px; padding: 0.4rem 0.2rem; }
     .digit-box span { font-size: 1.7rem; }
     .active-exam-card .day-counter { font-size: 2.8rem; }
+    .today-item { flex-direction: column; align-items: flex-start; gap: 0.4rem; }
+    .t-time { min-width: auto; }
   }
   @media (prefers-reduced-motion: reduce) { .digit-box::after { transition: none; animation: none; } }
 </style>
@@ -228,6 +253,11 @@
     <p>The examination cycle has officially come to an end! This support page and timetable are no longer active. Huge congratulations to all JSS3 students on executing their plans and completing their papers!</p>
   </div>
 
+  <div class="today-widget" id="todayWidget">
+    <h3>Today's Papers ⚡ <span id="todayWidgetDate"></span></h3>
+    <div id="todayPapersList"></div>
+  </div>
+
   <div class="quote-card" id="quoteCard">
     <div class="quote-text" id="quoteText"></div>
   </div>
@@ -239,136 +269,8 @@
         <thead>
           <tr><th>Day / Date</th><th>Paper / Subject</th><th style="text-align:center">Code</th><th>Duration</th><th>Time</th></tr>
         </thead>
-        <tbody>
-          <tr>
-            <td class="day-col">Mon 29 Jun</td>
-            <td>
-              <div class="sub split">Pre-Vocational Studies (PVS)</div>
-              <div class="sub triple-title">Nigerian Languages</div>
-              <div class="sub triple">Yoruba</div>
-              <div class="sub triple">Igbo</div>
-              <div class="sub triple">Hausa</div>
-            </td>
-            <td class="code-text">
-              <div class="sub split">001</div>
-              <div class="sub triple-title">&nbsp;</div>
-              <div class="sub triple">002</div>
-              <div class="sub triple">003</div>
-              <div class="sub triple">004</div>
-            </td>
-            <td>
-              <div class="sub split">2 Hours</div>
-              <div class="sub">2 Hours</div>
-            </td>
-            <td>
-              <div class="sub split">9:00AM – 11:00AM</div>
-              <div class="sub">12:10PM – 2:10PM</div>
-            </td>
-          </tr>
-          <tr>
-            <td class="day-col">Tue 30 Jun</td>
-            <td>
-              <div class="sub split">English Studies (OBJ)</div>
-              <div class="sub split">English Studies (THEORY)</div>
-              <div class="sub">History</div>
-            </td>
-            <td class="code-text">
-              <div class="sub split">005</div>
-              <div class="sub split">005</div>
-              <div class="sub">006</div>
-            </td>
-            <td>
-              <div class="sub split">1 Hour</div>
-              <div class="sub split">1:30 Mins</div>
-              <div class="sub">2 Hours</div>
-            </td>
-            <td>
-              <div class="sub split">9:00AM – 10:00AM</div>
-              <div class="sub split">10:30AM – 12:00PM</div>
-              <div class="sub">12:10PM – 2:10PM</div>
-            </td>
-          </tr>
-          <tr>
-            <td class="day-col">Wed 1 Jul</td>
-            <td>
-              <div class="sub split">French</div>
-              <div class="sub">Cultural & Creative Art (CCA)</div>
-            </td>
-            <td class="code-text">
-              <div class="sub split">007</div>
-              <div class="sub">008</div>
-            </td>
-            <td>
-              <div class="sub split">2 Hours</div>
-              <div class="sub">2 Hours</div>
-            </td>
-            <td>
-              <div class="sub split">9:00AM – 11:00AM</div>
-              <div class="sub">12:10PM – 2:10PM</div>
-            </td>
-          </tr>
-          <tr>
-            <td class="day-col">Thu 2 Jul</td>
-            <td>
-              <div class="sub split">Basic Science & Technology (BST)</div>
-              <div class="sub">National Value Education (NVE)</div>
-            </td>
-            <td class="code-text">
-              <div class="sub split">009</div>
-              <div class="sub">010</div>
-            </td>
-            <td>
-              <div class="sub split">2 Hours</div>
-              <div class="sub">2 Hours</div>
-            </td>
-            <td>
-              <div class="sub split">9:00AM – 11:00AM</div>
-              <div class="sub">12:10PM – 2:10PM</div>
-            </td>
-          </tr>
-          <tr>
-            <td class="day-col">Fri 3 Jul</td>
-            <td>
-              <div class="sub split">Business Studies</div>
-              <div class="sub">CRS / Islamic Studies</div>
-            </td>
-            <td class="code-text">
-              <div class="sub split">011</div>
-              <div class="sub">012 / 013</div>
-            </td>
-            <td>
-              <div class="sub split">2 Hours</div>
-              <div class="sub">2 Hours</div>
-            </td>
-            <td>
-              <div class="sub split">9:00AM – 11:00AM</div>
-              <div class="sub">12:10PM – 2:10PM</div>
-            </td>
-          </tr>
-          <tr>
-            <td class="day-col">Mon 6 Jul</td>
-            <td>
-              <div class="sub split">Mathematics (OBJ)</div>
-              <div class="sub split">Mathematics (THEORY)</div>
-              <div class="sub">Arabic Studies</div>
-            </td>
-            <td class="code-text">
-              <div class="sub split">014</div>
-              <div class="sub split">014</div>
-              <div class="sub">015</div>
-            </td>
-            <td>
-              <div class="sub split">1 Hour</div>
-              <div class="sub split">1:30 Mins</div>
-              <div class="sub">2 Hours</div>
-            </td>
-            <td>
-              <div class="sub split">9:00AM – 10:00AM</div>
-              <div class="sub split">10:30AM – 12:00PM</div>
-              <div class="sub">12:10PM – 2:10PM</div>
-            </td>
-          </tr>
-        </tbody>
+        <tbody id="timetableBody">
+          </tbody>
       </table>
     </div>
   </details>
@@ -381,20 +283,98 @@
 (function(){
   const $ = id => document.getElementById(id);
 
-  const examStart = new Date("2026-06-29T09:00:00");
-  const examEnd = new Date("2026-07-06T14:10:00");
-  
-  const activeDates = [
-    "2026-06-29", "2026-06-30", "2026-07-01", 
-    "2026-07-02", "2026-07-03", "2026-07-06"
+  // ---------------------------------------------------------
+  // TIMETABLE DATA ARRAY
+  // ---------------------------------------------------------
+  const timetableData = [
+    {
+      dateId: "2026-06-29",
+      dayLabel: "Mon 29 Jun",
+      papers: [
+        { name: "Pre-Vocational Studies (PVS)", code: "001", dur: "2 Hours", time: "9:00AM – 11:00AM" },
+        { name: "Nigerian Languages (Yoruba, Igbo, Hausa)", code: "002/003/004", dur: "2 Hours", time: "12:10PM – 2:10PM" }
+      ]
+    },
+    {
+      dateId: "2026-06-30",
+      dayLabel: "Tue 30 Jun",
+      papers: [
+        { name: "English Studies (OBJ)", code: "005", dur: "1 Hour", time: "9:00AM – 10:00AM" },
+        { name: "English Studies (THEORY)", code: "005", dur: "1:30 Mins", time: "10:30AM – 12:00PM" },
+        { name: "History", code: "006", dur: "2 Hours", time: "12:10PM – 2:10PM" }
+      ]
+    },
+    {
+      dateId: "2026-07-01",
+      dayLabel: "Wed 1 Jul",
+      papers: [
+        { name: "French", code: "007", dur: "2 Hours", time: "9:00AM – 11:00AM" },
+        { name: "Cultural & Creative Art (CCA)", code: "008", dur: "2 Hours", time: "12:10PM – 2:10PM" }
+      ]
+    },
+    {
+      dateId: "2026-07-02",
+      dayLabel: "Thu 2 Jul",
+      papers: [
+        { name: "Basic Science & Technology (BST)", code: "009", dur: "2 Hours", time: "9:00AM – 11:00AM" },
+        { name: "National Value Education (NVE)", code: "010", dur: "2 Hours", time: "12:10PM – 2:10PM" }
+      ]
+    },
+    {
+      dateId: "2026-07-03",
+      dayLabel: "Fri 3 Jul",
+      papers: [
+        { name: "Business Studies", code: "011", dur: "2 Hours", time: "9:00AM – 11:00AM" },
+        { name: "CRS / Islamic Studies", code: "012 / 013", dur: "2 Hours", time: "12:10PM – 2:10PM" }
+      ]
+    },
+    {
+      dateId: "2026-07-06",
+      dayLabel: "Mon 6 Jul",
+      papers: [
+        { name: "Mathematics (OBJ)", code: "014", dur: "1 Hour", time: "9:00AM – 10:00AM" },
+        { name: "Mathematics (THEORY)", code: "014", dur: "1:30 Mins", time: "10:30AM – 12:00PM" },
+        { name: "Arabic Studies", code: "015", dur: "2 Hours", time: "12:10PM – 2:10PM" }
+      ]
+    }
   ];
+
+  // Map active dates for the "Exams In Progress" card
+  const activeDates = timetableData.map(d => d.dateId);
+
+  // ---------------------------------------------------------
+  // RENDER FULL TIMETABLE
+  // ---------------------------------------------------------
+  const tbody = $('timetableBody');
+  timetableData.forEach(day => {
+    const names = day.papers.map((p, i) => `<div class="sub ${i !== day.papers.length-1 ? 'split' : ''}">${p.name}</div>`).join('');
+    const codes = day.papers.map((p, i) => `<div class="sub ${i !== day.papers.length-1 ? 'split' : ''}">${p.code}</div>`).join('');
+    const durs = day.papers.map((p, i) => `<div class="sub ${i !== day.papers.length-1 ? 'split' : ''}">${p.dur}</div>`).join('');
+    const times = day.papers.map((p, i) => `<div class="sub ${i !== day.papers.length-1 ? 'split' : ''}">${p.time}</div>`).join('');
+    
+    const tr = document.createElement('tr');
+    tr.innerHTML = `<td class="day-col">${day.dayLabel}</td><td>${names}</td><td class="code-text">${codes}</td><td>${durs}</td><td>${times}</td>`;
+    tbody.appendChild(tr);
+  });
+
+  // ---------------------------------------------------------
+  // TIMEZONE & DATE LOGIC
+  // ---------------------------------------------------------
+  // Exam boundaries configured with explicit Lagos Offset (UTC+1 is +01:00)
+  const examStart = new Date("2026-06-29T09:00:00+01:00").getTime();
+  const examEnd = new Date("2026-07-06T14:10:00+01:00").getTime();
   
+  // Formatter to strictly get the current date in Lagos, Nigeria
+  const lagosDateFormatter = new Intl.DateTimeFormat('en-CA', { 
+    timeZone: 'Africa/Lagos', year: 'numeric', month: '2-digit', day: '2-digit' 
+  });
+
   let totalWeeks = 1;
   let tickHandle = null;
   let prevValues = {d:null, h:null, m:null};
 
   function setBaseline(){
-    const now = new Date();
+    const now = Date.now();
     const days = Math.max(0, (examStart - now) / 86400000);
     totalWeeks = Math.min(20, Math.max(1, Math.ceil(days / 7)));
   }
@@ -423,8 +403,35 @@
     });
   }
 
+  // ---------------------------------------------------------
+  // TODAY'S PAPERS WIDGET LOGIC
+  // ---------------------------------------------------------
+  function updateTodayWidget() {
+    const todayLagosStr = lagosDateFormatter.format(new Date()); // e.g. "2026-06-29"
+    const todayData = timetableData.find(d => d.dateId === todayLagosStr);
+    
+    if (todayData) {
+      $('todayWidget').style.display = 'block';
+      $('todayWidgetDate').textContent = todayData.dayLabel;
+      
+      const htmlList = todayData.papers.map(p => `
+        <div class="today-item">
+          <div class="t-time">${p.time}</div>
+          <div class="t-name">${p.name}</div>
+          <div class="t-code">${p.code}</div>
+        </div>
+      `).join('');
+      $('todayPapersList').innerHTML = htmlList;
+    } else {
+      $('todayWidget').style.display = 'none';
+    }
+  }
+
+  // ---------------------------------------------------------
+  // MAIN COUNTDOWN ENGINE
+  // ---------------------------------------------------------
   function tick(){
-    const now = new Date();
+    const now = Date.now();
     const distance = Math.max(0, examStart - now);
     
     const d = Math.floor(distance / 86400000);
@@ -442,24 +449,31 @@
     $('seconds').textContent = String(s).padStart(2,'0');
 
     prevValues = {d, h, m};
+    
+    // Check Today Widget Once per tick just in case midnight passes
+    updateTodayWidget();
 
+    // UI Phases based on Timeline
     if (now > examEnd) {
+      // Phase 3: Exams completely finished
       $('progressSection').style.display = 'none';
       $('examProgressCard').style.display = 'none';
       $('quoteCard').style.display = 'none';
       $('timetableCard').style.display = 'none';
+      $('todayWidget').style.display = 'none';
       $('doneCard').style.display = 'block';
       if(tickHandle) clearInterval(tickHandle);
       
     } else if (now >= examStart && now <= examEnd) {
+      // Phase 2: Exams currently happening
       $('progressSection').style.display = 'none';
       $('examProgressCard').style.display = 'block';
       $('doneCard').style.display = 'none';
       $('quoteCard').style.display = 'block';
       $('timetableCard').style.display = 'block';
       
-      const localNowStr = now.getFullYear() + "-" + String(now.getMonth()+1).padStart(2,'0') + "-" + String(now.getDate()).padStart(2,'0');
-      const dayIndex = activeDates.indexOf(localNowStr);
+      const todayLagosStr = lagosDateFormatter.format(new Date());
+      const dayIndex = activeDates.indexOf(todayLagosStr);
       
       if (dayIndex !== -1) {
           $('examProgressTitle').textContent = "Exams In Progress";
@@ -474,6 +488,7 @@
       }
       
     } else {
+      // Phase 1: Countdown Mode
       $('progressSection').style.display = 'block';
       $('examProgressCard').style.display = 'none';
       $('doneCard').style.display = 'none';
