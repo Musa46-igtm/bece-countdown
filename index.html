@@ -231,7 +231,7 @@
   
   <div class="badge">SJSS</div>
   <div class="school-name">Surulere Junior Secondary School</div>
-  <div class="school-tag">JSS3 Class Project · Study Hub</div>
+  <div class="school-tag">JSS3 Study Hub</div>
 
   <h1>BECE Student Companion</h1>
   <div class="examline" id="examlineText">Countdown to Day 1: <strong id="examDateText">Mon, Jun 29, 2026</strong></div>
@@ -306,7 +306,7 @@
   </details>
 
   <div class="credit-session">Engineered for Success <span>Made by Musa</span></div>
-  <footer>Surulere Junior Secondary School · Class Utility Suite</footer>
+  <footer>Surulere Junior Secondary School · Student Utility Suite</footer>
 </div>
 
 <script>
@@ -612,8 +612,11 @@
       $('quoteCard').style.display = 'block';
       $('timetableCard').style.display = 'block';
 
-      updateNextPaperWidget(now);
-      $('nextPaperWidget').style.display = 'block';
+      // Before exams start, "next paper" is just Day 1 — already obvious
+      // from the countdown itself, so keep this widget hidden here.
+      // It only earns its place once exams are underway and there's a
+      // genuine weekend gap to bridge (handled in the branch above).
+      $('nextPaperWidget').style.display = 'none';
 
       const weeksRemaining = Math.ceil(d / 7);
       const weeksElapsed = Math.min(totalWeeks, Math.max(0, totalWeeks - weeksRemaining));
