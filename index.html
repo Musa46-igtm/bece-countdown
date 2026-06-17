@@ -6,7 +6,6 @@
 <title>Surulere Junior Secondary School — BECE Portal</title>
 
 <link rel="icon" type="image/svg+xml" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='%231D4FA3'%3E%3Cpath d='M12 2L1 7l11 5 11-5-11-5z'/%3E%3Cpath d='M4.5 9.5V15a7.5 7.5 0 0015 0V9.5l-7.5 3.4-7.5-3.4z'/%3E%3Cpath d='M22 8.5v6c0 .8-.5 1.5-1 1.5s-1-.7-1-1.5v-6c0-.8.5-1.5 1-1.5s1 .7 1 1.5z' fill='%23C9A227'/%3E%3C/svg%3E">
-
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Dancing+Script:wght@600;700&family=Playfair+Display:ital,wght@0,600;1,600&family=Space+Grotesk:wght@500;700&family=Work+Sans:wght@400;500;600&display=swap" rel="stylesheet">
@@ -81,7 +80,6 @@
   }
   .examline strong { color: var(--gold); font-weight: 600; font-style: normal; }
 
-  /* Countdown Mode */
   .countdown {
     display: flex; justify-content: center; align-items: flex-end;
     gap: 0.9rem; flex-wrap: wrap; margin-bottom: 1.8rem;
@@ -124,33 +122,24 @@
   .progress-label { font-size: 0.85rem; color: var(--navy); }
   .progress-label strong { color: var(--royal); }
 
-  /* Exam Active Mode */
   .active-exam-card {
-    display: none;
-    text-align: center;
+    display: none; text-align: center;
     background: linear-gradient(135deg, var(--royal), var(--navy));
-    color: var(--white);
-    border-radius: 12px;
-    padding: 2.5rem 1.5rem;
-    margin-bottom: 2rem;
+    color: var(--white); border-radius: 12px;
+    padding: 2.5rem 1.5rem; margin-bottom: 2rem;
     box-shadow: 0 8px 24px rgba(10, 38, 71, 0.2);
     animation: fadeIn 0.8s ease;
   }
   .active-exam-card h2 {
-    font-family: 'Space Grotesk', sans-serif;
-    font-size: 1.2rem; text-transform: uppercase; letter-spacing: 0.1em;
+    font-family: 'Space Grotesk', sans-serif; font-size: 1.2rem; 
+    text-transform: uppercase; letter-spacing: 0.1em;
     margin: 0 0 0.5rem; color: var(--gold);
   }
-  .active-exam-card .day-counter {
-    font-family: 'Playfair Display', serif;
-    font-size: 3.5rem; font-weight: 700; margin: 0 0 0.5rem;
-  }
+  .active-exam-card .day-counter { font-family: 'Playfair Display', serif; font-size: 3.5rem; font-weight: 700; margin: 0 0 0.5rem; }
   .active-exam-card p { margin: 0; font-size: 0.95rem; opacity: 0.9; }
 
-  /* Unavailable / Done Mode */
   .done-card {
-    display: none;
-    text-align: center; background: var(--white);
+    display: none; text-align: center; background: var(--white);
     border: 2px solid var(--gold); border-radius: 12px;
     padding: 3rem 1.5rem; margin-bottom: 1.9rem;
     box-shadow: 0 8px 24px rgba(201, 162, 39, 0.15);
@@ -162,7 +151,6 @@
 
   @keyframes fadeIn { from { opacity: 0; transform: translateY(10px); } to { opacity: 1; transform: translateY(0); } }
 
-  /* Cards */
   .quote-card, .timetable-card {
     background: var(--white); border-radius: 10px;
     border: 1px solid var(--mist); padding: 1.3rem 1.5rem;
@@ -182,26 +170,8 @@
   table.ttable tr:nth-child(even) td { background: var(--paper); }
   table.ttable tr:hover td { background: var(--mist); }
 
-  /* Author Credit Section */
-  .credit-session {
-    text-align: center;
-    margin: 2rem 0 0.5rem;
-    font-size: 0.78rem;
-    letter-spacing: 0.08em;
-    text-transform: uppercase;
-    color: var(--navy);
-    font-weight: 600;
-    opacity: 0.9;
-  }
-  .credit-session span {
-    color: var(--gold);
-    font-family: 'Space Grotesk', sans-serif;
-    font-weight: 700;
-    border-left: 2px solid var(--mist);
-    padding-left: 6px;
-    margin-left: 4px;
-  }
-
+  .credit-session { text-align: center; margin: 2rem 0 0.5rem; font-size: 0.78rem; letter-spacing: 0.08em; text-transform: uppercase; color: var(--navy); font-weight: 600; opacity: 0.9; }
+  .credit-session span { color: var(--gold); font-family: 'Space Grotesk', sans-serif; font-weight: 700; border-left: 2px solid var(--mist); padding-left: 6px; margin-left: 4px; }
   footer { text-align: center; font-size: 0.78rem; font-weight: 500; color: var(--royal); opacity: 0.7; }
   :focus-visible { outline: 2px solid var(--gold); outline-offset: 2px; }
 
@@ -211,10 +181,7 @@
     .digit-box span { font-size: 1.7rem; }
     .active-exam-card .day-counter { font-size: 2.8rem; }
   }
-
-  @media (prefers-reduced-motion: reduce) {
-    .digit-box::after { transition: none; animation: none; }
-  }
+  @media (prefers-reduced-motion: reduce) { .digit-box::after { transition: none; animation: none; } }
 </style>
 </head>
 <body>
@@ -225,67 +192,66 @@
   <div class="school-name">Surulere Junior Secondary School</div>
   <div class="school-tag">JSS3 · Final Stretch</div>
 
-  <div id="activePortalContent">
-    <h1>Countdown to BECE 2026</h1>
-    <div class="examline">Begins <strong id="examDateText">Mon, Jun 29, 2026</strong></div>
+  <h1>Countdown to BECE 2026</h1>
+  <div class="examline">Begins <strong id="examDateText">Mon, Jun 29, 2026</strong></div>
 
-    <div id="countdownArea">
-      <div class="countdown">
-        <div class="unit"><div class="digit-box" id="daysBox"><span id="days">00</span></div><div class="label">Days</div></div>
-        <div class="unit"><div class="digit-box" id="hoursBox"><span id="hours">00</span></div><div class="label">Hours</div></div>
-        <div class="unit"><div class="digit-box" id="minutesBox"><span id="minutes">00</span></div><div class="label">Minutes</div></div>
-        <div class="unit"><div class="digit-box" id="secondsBox"><span id="seconds">00</span></div><div class="label">Seconds</div></div>
-      </div>
-      <div class="progress-section">
-        <div class="bubbles" id="bubbles"></div>
-        <div class="progress-label" id="progressLabel"></div>
-      </div>
-    </div>
+  <!-- Countdown digits ALWAYS remain visible -->
+  <div class="countdown" id="countdownDigits">
+    <div class="unit"><div class="digit-box" id="daysBox"><span id="days">00</span></div><div class="label">Days</div></div>
+    <div class="unit"><div class="digit-box" id="hoursBox"><span id="hours">00</span></div><div class="label">Hours</div></div>
+    <div class="unit"><div class="digit-box" id="minutesBox"><span id="minutes">00</span></div><div class="label">Minutes</div></div>
+    <div class="unit"><div class="digit-box" id="secondsBox"><span id="seconds">00</span></div><div class="label">Seconds</div></div>
+  </div>
 
-    <div class="active-exam-card" id="examProgressCard">
-      <h2>Exams In Progress</h2>
-      <div class="day-counter" id="currentExamDay">Day 1 of 8</div>
-      <p>Stay focused, read carefully, and execute your strategy. You've got this.</p>
-    </div>
+  <!-- Dynamic Content Sections -->
+  <div class="progress-section" id="progressSection">
+    <div class="bubbles" id="bubbles"></div>
+    <div class="progress-label" id="progressLabel"></div>
+  </div>
 
-    <div class="quote-card" id="quoteCard">
-      <div class="quote-text" id="quoteText"></div>
-    </div>
-
-    <details class="timetable-card" id="timetableCard">
-      <summary>Full Lagos State BECE Timetable</summary>
-      <div class="ttable-wrap">
-        <table class="ttable">
-          <thead>
-            <tr><th>Day / Date</th><th>Subject</th><th>Duration</th><th>Time</th></tr>
-          </thead>
-          <tbody>
-            <tr><td>Mon 29 Jun</td><td>Pre-Vocational Studies</td><td>2 hrs</td><td>9:00–11:00am</td></tr>
-            <tr><td>Mon 29 Jun</td><td>Nigerian Languages</td><td>2 hrs</td><td>12:10–2:10pm</td></tr>
-            <tr><td>Tue 30 Jun</td><td>English Studies (Obj/Theory)</td><td>2h 30m</td><td>9:00–12:00pm</td></tr>
-            <tr><td>Tue 30 Jun</td><td>History</td><td>2 hrs</td><td>12:10–2:10pm</td></tr>
-            <tr><td>Wed 1 Jul</td><td>French</td><td>2 hrs</td><td>9:00–11:00am</td></tr>
-            <tr><td>Wed 1 Jul</td><td>Cultural & Creative Art</td><td>2 hrs</td><td>12:10–2:10pm</td></tr>
-            <tr><td>Thu 2 Jul</td><td>Basic Science & Tech</td><td>2 hrs</td><td>9:00–11:00am</td></tr>
-            <tr><td>Thu 2 Jul</td><td>National Value Education</td><td>2 hrs</td><td>12:10–2:10pm</td></tr>
-            <tr><td>Fri 3 Jul</td><td>Business Studies</td><td>2 hrs</td><td>9:00–11:00am</td></tr>
-            <tr><td>Fri 3 Jul</td><td>CRS / Islamic Studies</td><td>2 hrs</td><td>12:10–2:10pm</td></tr>
-            <tr><td>Mon 6 Jul</td><td>Mathematics (Obj/Theory)</td><td>2h 30m</td><td>9:00–12:00pm</td></tr>
-            <tr><td>Mon 6 Jul</td><td>Arabic Studies</td><td>2 hrs</td><td>12:10–2:10pm</td></tr>
-          </tbody>
-        </table>
-      </div>
-    </details>
+  <div class="active-exam-card" id="examProgressCard">
+    <h2>Exams In Progress</h2>
+    <div class="day-counter" id="currentExamDay">Day 1 of 8</div>
+    <p>Stay focused, read carefully, and execute your strategy. You've got this.</p>
   </div>
 
   <div class="done-card" id="doneCard">
-    <h2>BECE 2026 Completed</h2>
-    <div class="status-note">This page is no longer available</div>
-    <p>The examination cycle has officially come to an end. Surulere JSS congratulates all students on completing their final papers. The exam hub tracking session is now securely closed.</p>
+    <h2>Portal Closed</h2>
+    <div class="status-note">BECE 2026 Concluded</div>
+    <p>The examination cycle has officially come to an end. This tracker and timetable are no longer active. Surulere JSS congratulates all students on completing their final papers!</p>
   </div>
 
+  <!-- Additional Widgets -->
+  <div class="quote-card" id="quoteCard">
+    <div class="quote-text" id="quoteText"></div>
+  </div>
+
+  <details class="timetable-card" id="timetableCard">
+    <summary>Full Lagos State BECE Timetable</summary>
+    <div class="ttable-wrap">
+      <table class="ttable">
+        <thead>
+          <tr><th>Day / Date</th><th>Subject</th><th>Duration</th><th>Time</th></tr>
+        </thead>
+        <tbody>
+          <tr><td>Mon 29 Jun</td><td>Pre-Vocational Studies</td><td>2 hrs</td><td>9:00–11:00am</td></tr>
+          <tr><td>Mon 29 Jun</td><td>Nigerian Languages</td><td>2 hrs</td><td>12:10–2:10pm</td></tr>
+          <tr><td>Tue 30 Jun</td><td>English Studies (Obj/Theory)</td><td>2h 30m</td><td>9:00–12:00pm</td></tr>
+          <tr><td>Tue 30 Jun</td><td>History</td><td>2 hrs</td><td>12:10–2:10pm</td></tr>
+          <tr><td>Wed 1 Jul</td><td>French</td><td>2 hrs</td><td>9:00–11:00am</td></tr>
+          <tr><td>Wed 1 Jul</td><td>Cultural & Creative Art</td><td>2 hrs</td><td>12:10–2:10pm</td></tr>
+          <tr><td>Thu 2 Jul</td><td>Basic Science & Tech</td><td>2 hrs</td><td>9:00–11:00am</td></tr>
+          <tr><td>Thu 2 Jul</td><td>National Value Education</td><td>2 hrs</td><td>12:10–2:10pm</td></tr>
+          <tr><td>Fri 3 Jul</td><td>Business Studies</td><td>2 hrs</td><td>9:00–11:00am</td></tr>
+          <tr><td>Fri 3 Jul</td><td>CRS / Islamic Studies</td><td>2 hrs</td><td>12:10–2:10pm</td></tr>
+          <tr><td>Mon 6 Jul</td><td>Mathematics (Obj/Theory)</td><td>2h 30m</td><td>9:00–12:00pm</td></tr>
+          <tr><td>Mon 6 Jul</td><td>Arabic Studies</td><td>2 hrs</td><td>12:10–2:10pm</td></tr>
+        </tbody>
+      </table>
+    </div>
+  </details>
+
   <div class="credit-session">Engineered for Success <span>Made by Musa</span></div>
-  
   <footer>Surulere Junior Secondary School — Executing greatness.</footer>
 </div>
 
@@ -293,7 +259,7 @@
 (function(){
   const $ = id => document.getElementById(id);
 
-  // Official Fixed Exam Dates
+  // Set dates
   const examStart = new Date("2026-06-29T09:00:00");
   const examEnd = new Date("2026-07-06T14:10:00");
   
@@ -334,32 +300,9 @@
   function tick(){
     const now = new Date();
 
-    // Phase 3: Exams completely finished (All times zero / window passed)
-    if (now > examEnd) {
-      $('activePortalContent').style.display = 'none';
-      $('doneCard').style.display = 'block';
-      if(tickHandle) clearInterval(tickHandle);
-      return;
-    }
-
-    // Phase 2: Exams currently happening (June 29 - July 6)
-    if (now >= examStart && now <= examEnd) {
-      $('countdownArea').style.display = 'none';
-      $('examProgressCard').style.display = 'block';
-      
-      const startDateOnly = new Date(examStart.getFullYear(), examStart.getMonth(), examStart.getDate());
-      const nowDateOnly = new Date(now.getFullYear(), now.getMonth(), now.getDate());
-      const dayDiff = Math.floor((nowDateOnly - startDateOnly) / 86400000) + 1;
-      
-      $('currentExamDay').textContent = `Day ${dayDiff} of 8`;
-      return;
-    }
-
-    // Phase 1: Countdown Mode
-    $('countdownArea').style.display = 'block';
-    $('examProgressCard').style.display = 'none';
-
-    const distance = examStart - now;
+    // The trick: Prevent distance from going negative so digits lock at 00
+    const distance = Math.max(0, examStart - now);
+    
     const d = Math.floor(distance / 86400000);
     const h = Math.floor((distance % 86400000) / 3600000);
     const m = Math.floor((distance % 3600000) / 60000);
@@ -376,10 +319,42 @@
 
     prevValues = {d, h, m};
 
-    const weeksRemaining = Math.ceil(d / 7);
-    const weeksElapsed = Math.min(totalWeeks, Math.max(0, totalWeeks - weeksRemaining));
-    renderBubbles(weeksElapsed);
-    $('progressLabel').innerHTML = `Week <strong>${weeksElapsed}</strong> of ${totalWeeks} mapped · <strong>${d}</strong> day${d === 1 ? '' : 's'} to go`;
+    // UI Logic Based on Timeline
+    if (now > examEnd) {
+      // Phase 3: Exams completely finished - Shut off features
+      $('progressSection').style.display = 'none';
+      $('examProgressCard').style.display = 'none';
+      $('quoteCard').style.display = 'none';
+      $('timetableCard').style.display = 'none';
+      $('doneCard').style.display = 'block';
+      if(tickHandle) clearInterval(tickHandle);
+      
+    } else if (now >= examStart && now <= examEnd) {
+      // Phase 2: Exams currently happening
+      $('progressSection').style.display = 'none';
+      $('examProgressCard').style.display = 'block';
+      $('doneCard').style.display = 'none';
+      $('quoteCard').style.display = 'block';
+      $('timetableCard').style.display = 'block';
+      
+      const startDateOnly = new Date(examStart.getFullYear(), examStart.getMonth(), examStart.getDate());
+      const nowDateOnly = new Date(now.getFullYear(), now.getMonth(), now.getDate());
+      const dayDiff = Math.floor((nowDateOnly - startDateOnly) / 86400000) + 1;
+      $('currentExamDay').textContent = `Day ${dayDiff} of 8`;
+      
+    } else {
+      // Phase 1: Countdown Mode
+      $('progressSection').style.display = 'block';
+      $('examProgressCard').style.display = 'none';
+      $('doneCard').style.display = 'none';
+      $('quoteCard').style.display = 'block';
+      $('timetableCard').style.display = 'block';
+
+      const weeksRemaining = Math.ceil(d / 7);
+      const weeksElapsed = Math.min(totalWeeks, Math.max(0, totalWeeks - weeksRemaining));
+      renderBubbles(weeksElapsed);
+      $('progressLabel').innerHTML = `Week <strong>${weeksElapsed}</strong> of ${totalWeeks} mapped · <strong>${d}</strong> day${d === 1 ? '' : 's'} to go`;
+    }
   }
 
   function startTicking(){
@@ -389,9 +364,30 @@
     tickHandle = setInterval(tick, 1000);
   }
 
-  // Auto Quotes
+  // Quotes
   const quotes = [
     "Every paper you've practiced is a rehearsal for the real thing.",
     "You don't need to know everything — just enough, incredibly well.",
     "Slow, careful reading beats fast, careless reading. Every time.",
-    "Mistakes in your mocks were lessons. You already
+    "Mistakes in your mocks were lessons. You already paid for them.",
+    "Tired today, prepared tomorrow. Rest is a crucial part of revision.",
+    "One subject at a time. One paper at a time. One question at a time."
+  ];
+  let qi = Math.floor(Math.random() * quotes.length);
+  function renderQuote(){ 
+    if(!$('quoteText')) return;
+    $('quoteText').style.opacity = 0;
+    setTimeout(() => {
+      $('quoteText').textContent = quotes[qi]; 
+      $('quoteText').style.transition = 'opacity 0.5s ease';
+      $('quoteText').style.opacity = 1;
+    }, 200);
+  }
+  setInterval(()=>{ qi=(qi+1)%quotes.length; renderQuote(); }, 8000);
+  renderQuote();
+
+  startTicking();
+})();
+</script>
+</body>
+</html>
