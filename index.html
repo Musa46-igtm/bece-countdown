@@ -3,9 +3,8 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>BECE Central — Surulere Junior Secondary School</title>
+<title>Surulere Junior Secondary School — BECE Portal</title>
 
-<!-- Modern Embedded Favicon (Graduation Cap Matching Theme Cores) -->
 <link rel="icon" type="image/svg+xml" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='%231D4FA3'%3E%3Cpath d='M12 2L1 7l11 5 11-5-11-5z'/%3E%3Cpath d='M4.5 9.5V15a7.5 7.5 0 0015 0V9.5l-7.5 3.4-7.5-3.4z'/%3E%3Cpath d='M22 8.5v6c0 .8-.5 1.5-1 1.5s-1-.7-1-1.5v-6c0-.8.5-1.5 1-1.5s1 .7 1 1.5z' fill='%23C9A227'/%3E%3C/svg%3E">
 
 <link rel="preconnect" href="https://fonts.googleapis.com">
@@ -148,17 +147,18 @@
   }
   .active-exam-card p { margin: 0; font-size: 0.95rem; opacity: 0.9; }
 
-  /* Done Mode */
+  /* Unavailable / Done Mode */
   .done-card {
     display: none;
     text-align: center; background: var(--white);
     border: 2px solid var(--gold); border-radius: 12px;
-    padding: 2.5rem 1.5rem; margin-bottom: 1.9rem;
+    padding: 3rem 1.5rem; margin-bottom: 1.9rem;
     box-shadow: 0 8px 24px rgba(201, 162, 39, 0.15);
     animation: fadeIn 0.8s ease;
   }
   .done-card h2 { font-family: 'Dancing Script', cursive; font-size: 2.8rem; margin: 0 0 0.4rem; color: var(--royal); }
-  .done-card p { color: var(--navy); margin: 0; font-size: 1.05rem; line-height: 1.5; }
+  .done-card .status-note { font-family: 'Space Grotesk', sans-serif; text-transform: uppercase; font-size: 0.8rem; letter-spacing: 0.1em; color: var(--gold); margin-bottom: 1rem; font-weight: 700; }
+  .done-card p { color: var(--navy); margin: 0; font-size: 1.05rem; line-height: 1.6; }
 
   @keyframes fadeIn { from { opacity: 0; transform: translateY(10px); } to { opacity: 1; transform: translateY(0); } }
 
@@ -225,66 +225,65 @@
   <div class="school-name">Surulere Junior Secondary School</div>
   <div class="school-tag">JSS3 · Final Stretch</div>
 
-  <h1>Countdown to BECE 2026</h1>
-  <div class="examline">Begins <strong id="examDateText">Mon, Jun 29, 2026</strong></div>
+  <div id="activePortalContent">
+    <h1>Countdown to BECE 2026</h1>
+    <div class="examline">Begins <strong id="examDateText">Mon, Jun 29, 2026</strong></div>
 
-  <!-- Phase 1: Countdown -->
-  <div id="countdownArea">
-    <div class="countdown">
-      <div class="unit"><div class="digit-box" id="daysBox"><span id="days">00</span></div><div class="label">Days</div></div>
-      <div class="unit"><div class="digit-box" id="hoursBox"><span id="hours">00</span></div><div class="label">Hours</div></div>
-      <div class="unit"><div class="digit-box" id="minutesBox"><span id="minutes">00</span></div><div class="label">Minutes</div></div>
-      <div class="unit"><div class="digit-box" id="secondsBox"><span id="seconds">00</span></div><div class="label">Seconds</div></div>
+    <div id="countdownArea">
+      <div class="countdown">
+        <div class="unit"><div class="digit-box" id="daysBox"><span id="days">00</span></div><div class="label">Days</div></div>
+        <div class="unit"><div class="digit-box" id="hoursBox"><span id="hours">00</span></div><div class="label">Hours</div></div>
+        <div class="unit"><div class="digit-box" id="minutesBox"><span id="minutes">00</span></div><div class="label">Minutes</div></div>
+        <div class="unit"><div class="digit-box" id="secondsBox"><span id="seconds">00</span></div><div class="label">Seconds</div></div>
+      </div>
+      <div class="progress-section">
+        <div class="bubbles" id="bubbles"></div>
+        <div class="progress-label" id="progressLabel"></div>
+      </div>
     </div>
-    <div class="progress-section">
-      <div class="bubbles" id="bubbles"></div>
-      <div class="progress-label" id="progressLabel"></div>
+
+    <div class="active-exam-card" id="examProgressCard">
+      <h2>Exams In Progress</h2>
+      <div class="day-counter" id="currentExamDay">Day 1 of 8</div>
+      <p>Stay focused, read carefully, and execute your strategy. You've got this.</p>
     </div>
+
+    <div class="quote-card" id="quoteCard">
+      <div class="quote-text" id="quoteText"></div>
+    </div>
+
+    <details class="timetable-card" id="timetableCard">
+      <summary>Full Lagos State BECE Timetable</summary>
+      <div class="ttable-wrap">
+        <table class="ttable">
+          <thead>
+            <tr><th>Day / Date</th><th>Subject</th><th>Duration</th><th>Time</th></tr>
+          </thead>
+          <tbody>
+            <tr><td>Mon 29 Jun</td><td>Pre-Vocational Studies</td><td>2 hrs</td><td>9:00–11:00am</td></tr>
+            <tr><td>Mon 29 Jun</td><td>Nigerian Languages</td><td>2 hrs</td><td>12:10–2:10pm</td></tr>
+            <tr><td>Tue 30 Jun</td><td>English Studies (Obj/Theory)</td><td>2h 30m</td><td>9:00–12:00pm</td></tr>
+            <tr><td>Tue 30 Jun</td><td>History</td><td>2 hrs</td><td>12:10–2:10pm</td></tr>
+            <tr><td>Wed 1 Jul</td><td>French</td><td>2 hrs</td><td>9:00–11:00am</td></tr>
+            <tr><td>Wed 1 Jul</td><td>Cultural & Creative Art</td><td>2 hrs</td><td>12:10–2:10pm</td></tr>
+            <tr><td>Thu 2 Jul</td><td>Basic Science & Tech</td><td>2 hrs</td><td>9:00–11:00am</td></tr>
+            <tr><td>Thu 2 Jul</td><td>National Value Education</td><td>2 hrs</td><td>12:10–2:10pm</td></tr>
+            <tr><td>Fri 3 Jul</td><td>Business Studies</td><td>2 hrs</td><td>9:00–11:00am</td></tr>
+            <tr><td>Fri 3 Jul</td><td>CRS / Islamic Studies</td><td>2 hrs</td><td>12:10–2:10pm</td></tr>
+            <tr><td>Mon 6 Jul</td><td>Mathematics (Obj/Theory)</td><td>2h 30m</td><td>9:00–12:00pm</td></tr>
+            <tr><td>Mon 6 Jul</td><td>Arabic Studies</td><td>2 hrs</td><td>12:10–2:10pm</td></tr>
+          </tbody>
+        </table>
+      </div>
+    </details>
   </div>
 
-  <!-- Phase 2: Exams in Progress -->
-  <div class="active-exam-card" id="examProgressCard">
-    <h2>Exams In Progress</h2>
-    <div class="day-counter" id="currentExamDay">Day 1 of 8</div>
-    <p>Stay focused, read carefully, and execute your strategy. You've got this.</p>
-  </div>
-
-  <!-- Phase 3: Exams Complete -->
   <div class="done-card" id="doneCard">
-    <h2>Congratulations!</h2>
-    <p>The hard work is over. Surulere JSS is incredibly proud of your dedication and effort. Enjoy your well-deserved rest!</p>
+    <h2>BECE 2026 Completed</h2>
+    <div class="status-note">This page is no longer available</div>
+    <p>The examination cycle has officially come to an end. Surulere JSS congratulates all students on completing their final papers. The exam hub tracking session is now securely closed.</p>
   </div>
 
-  <div class="quote-card">
-    <div class="quote-text" id="quoteText"></div>
-  </div>
-
-  <details class="timetable-card">
-    <summary>Full Lagos State BECE Timetable</summary>
-    <div class="ttable-wrap">
-      <table class="ttable">
-        <thead>
-          <tr><th>Day / Date</th><th>Subject</th><th>Duration</th><th>Time</th></tr>
-        </thead>
-        <tbody>
-          <tr><td>Mon 29 Jun</td><td>Pre-Vocational Studies</td><td>2 hrs</td><td>9:00–11:00am</td></tr>
-          <tr><td>Mon 29 Jun</td><td>Nigerian Languages</td><td>2 hrs</td><td>12:10–2:10pm</td></tr>
-          <tr><td>Tue 30 Jun</td><td>English Studies (Obj/Theory)</td><td>2h 30m</td><td>9:00–12:00pm</td></tr>
-          <tr><td>Tue 30 Jun</td><td>History</td><td>2 hrs</td><td>12:10–2:10pm</td></tr>
-          <tr><td>Wed 1 Jul</td><td>French</td><td>2 hrs</td><td>9:00–11:00am</td></tr>
-          <tr><td>Wed 1 Jul</td><td>Cultural & Creative Art</td><td>2 hrs</td><td>12:10–2:10pm</td></tr>
-          <tr><td>Thu 2 Jul</td><td>Basic Science & Tech</td><td>2 hrs</td><td>9:00–11:00am</td></tr>
-          <tr><td>Thu 2 Jul</td><td>National Value Education</td><td>2 hrs</td><td>12:10–2:10pm</td></tr>
-          <tr><td>Fri 3 Jul</td><td>Business Studies</td><td>2 hrs</td><td>9:00–11:00am</td></tr>
-          <tr><td>Fri 3 Jul</td><td>CRS / Islamic Studies</td><td>2 hrs</td><td>12:10–2:10pm</td></tr>
-          <tr><td>Mon 6 Jul</td><td>Mathematics (Obj/Theory)</td><td>2h 30m</td><td>9:00–12:00pm</td></tr>
-          <tr><td>Mon 6 Jul</td><td>Arabic Studies</td><td>2 hrs</td><td>12:10–2:10pm</td></tr>
-        </tbody>
-      </table>
-    </div>
-  </details>
-
-  <!-- Made By Session -->
   <div class="credit-session">Engineered for Success <span>Made by Musa</span></div>
   
   <footer>Surulere Junior Secondary School — Executing greatness.</footer>
@@ -318,6 +317,7 @@
 
   function renderBubbles(weeksElapsed){
     const container = $('bubbles');
+    if(!container) return;
     if(container.childElementCount !== totalWeeks){
       container.innerHTML = '';
       for(let i=0; i<totalWeeks; i++){
@@ -334,10 +334,9 @@
   function tick(){
     const now = new Date();
 
-    // Phase 3: Exams completely finished
+    // Phase 3: Exams completely finished (All times zero / window passed)
     if (now > examEnd) {
-      $('countdownArea').style.display = 'none';
-      $('examProgressCard').style.display = 'none';
+      $('activePortalContent').style.display = 'none';
       $('doneCard').style.display = 'block';
       if(tickHandle) clearInterval(tickHandle);
       return;
@@ -346,7 +345,6 @@
     // Phase 2: Exams currently happening (June 29 - July 6)
     if (now >= examStart && now <= examEnd) {
       $('countdownArea').style.display = 'none';
-      $('doneCard').style.display = 'none';
       $('examProgressCard').style.display = 'block';
       
       const startDateOnly = new Date(examStart.getFullYear(), examStart.getMonth(), examStart.getDate());
@@ -360,7 +358,6 @@
     // Phase 1: Countdown Mode
     $('countdownArea').style.display = 'block';
     $('examProgressCard').style.display = 'none';
-    $('doneCard').style.display = 'none';
 
     const distance = examStart - now;
     const d = Math.floor(distance / 86400000);
@@ -397,26 +394,4 @@
     "Every paper you've practiced is a rehearsal for the real thing.",
     "You don't need to know everything — just enough, incredibly well.",
     "Slow, careful reading beats fast, careless reading. Every time.",
-    "Mistakes in your mocks were lessons. You already paid for them.",
-    "Tired today, prepared tomorrow. Rest is a crucial part of revision.",
-    "One subject at a time. One paper at a time. One question at a time."
-  ];
-  let qi = Math.floor(Math.random() * quotes.length);
-  function renderQuote(){ 
-    $('quoteText').style.opacity = 0;
-    setTimeout(() => {
-      $('quoteText').textContent = quotes[qi]; 
-      $('quoteText').style.transition = 'opacity 0.5s ease';
-      $('quoteText').style.opacity = 1;
-    }, 200);
-  }
-  setInterval(()=>{ qi=(qi+1)%quotes.length; renderQuote(); }, 8000);
-  renderQuote();
-
-  // Initialization
-  startTicking();
-
-})();
-</script>
-</body>
-</html>
+    "Mistakes in your mocks were lessons. You already
