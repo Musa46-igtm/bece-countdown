@@ -4,17 +4,13 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Surulere JSS — BECE Student Companion</title>
-<meta name="description" content="Countdown, daily schedule, and full Lagos State BECE timetable for JSS3 students.">
 
 <link rel="manifest" href="manifest.json">
 <meta name="theme-color" content="#1D4FA3">
 <meta name="apple-mobile-web-app-capable" content="yes">
 <meta name="apple-mobile-web-app-status-bar-style" content="default">
-<meta name="apple-mobile-web-app-title" content="BECE Companion">
-<link rel="apple-touch-icon" href="icons/icon-192.png">
-<link rel="icon" type="image/png" sizes="192x192" href="icons/icon-192.png">
-<link rel="icon" type="image/png" sizes="512x512" href="icons/icon-512.png">
 
+<link rel="icon" type="image/svg+xml" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='%231D4FA3'%3E%3Cpath d='M12 2L1 7l11 5 11-5-11-5z'/%3E%3Cpath d='M4.5 9.5V15a7.5 7.5 0 0015 0V9.5l-7.5 3.4-7.5-3.4z'/%3E%3Cpath d='M22 8.5v6c0 .8-.5 1.5-1 1.5s-1-.7-1-1.5v-6c0-.8.5-1.5 1-1.5s1 .7 1 1.5z' fill='%23C9A227'/%3E%3C/svg%3E">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Dancing+Script:wght@600;700&family=Playfair+Display:ital,wght@0,600;1,600&family=Space+Grotesk:wght@500;700&family=Work+Sans:wght@400;500;600&display=swap" rel="stylesheet">
@@ -202,32 +198,17 @@
   .sub { padding: 0.45rem 0; line-height: 1.4; }
   .sub.split { border-bottom: 1px dashed #c0d3eb; }
 
-  /* PWA Install Button */
-  #installBtn {
+  /* Direct APK Download Button styling */
+  .download-btn {
+    text-decoration: none;
     display: inline-flex; align-items: center; justify-content: center; gap: 0.6rem;
     width: 100%; background: var(--navy); color: var(--white);
     border: none; border-radius: 8px; padding: 1rem; font-family: 'Space Grotesk', sans-serif;
     font-size: 1rem; font-weight: 700; cursor: pointer; margin-bottom: 1.6rem;
     box-shadow: 0 4px 12px rgba(10, 38, 71, 0.15); transition: background 0.3s;
   }
-  #installBtn[hidden] { display: none; }
-  #installBtn:hover { background: var(--royal); }
-  #installBtn svg { width: 18px; height: 18px; fill: currentColor; }
-
-  .apk-link {
-    display: flex; align-items: center; justify-content: center; gap: 0.6rem;
-    width: 100%; background: var(--white); color: var(--royal);
-    border: 2px solid var(--royal); border-radius: 8px; padding: 0.9rem;
-    font-family: 'Space Grotesk', sans-serif; font-size: 0.95rem; font-weight: 700;
-    text-decoration: none; margin-bottom: 0.5rem; box-sizing: border-box;
-    transition: background 0.3s, color 0.3s;
-  }
-  .apk-link:hover { background: var(--royal); color: var(--white); }
-  .apk-link svg { width: 18px; height: 18px; fill: currentColor; flex-shrink: 0; }
-  .apk-note {
-    text-align: center; font-size: 0.78rem; color: var(--navy); opacity: 0.75;
-    margin: 0 0 1.6rem;
-  }
+  .download-btn:hover { background: var(--royal); }
+  .download-btn svg { width: 18px; height: 18px; fill: currentColor; }
 
   .credit-session { text-align: center; margin: 2rem 0 0.5rem; font-size: 0.78rem; letter-spacing: 0.08em; text-transform: uppercase; color: var(--navy); font-weight: 600; opacity: 0.9; }
   .credit-session span { color: var(--gold); font-family: 'Space Grotesk', sans-serif; font-weight: 700; border-left: 2px solid var(--mist); padding-left: 6px; margin-left: 4px; }
@@ -251,7 +232,7 @@
   
   <div class="badge">SJSS</div>
   <div class="school-name">Surulere Junior Secondary School</div>
-  <div class="school-tag">JSS3 Study Hub</div>
+  <div class="school-tag">JSS3 Class Project · Study Hub</div>
 
   <h1>BECE Student Companion</h1>
   <div class="examline" id="examlineText">Countdown to Day 1: <strong id="examDateText">Mon, Jun 29, 2026</strong></div>
@@ -282,16 +263,10 @@
     <p>The examination cycle has officially come to an end! This support page and timetable are no longer active. Huge congratulations to all JSS3 students on executing their plans and completing their papers!</p>
   </div>
 
-  <button id="installBtn" hidden>
+  <a href="app-release.apk" class="download-btn" id="apkDownloadLink" download>
     <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M17 1.01L7 1c-1.1 0-2 .9-2 2v18c0 1.1.9 2 2 2h10c1.1 0 2-.9 2-2V3c0-1.1-.9-1.99-2-1.99zM17 19H7V5h10v14zM12 18c.55 0 1-.45 1-1s-.45-1-1-1-1 .45-1 1 .45 1 1 1z"/></svg>
-    Install App
-  </button>
-
-  <a class="apk-link" href="app-release.apk" download>
-    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M19 9h-4V3H9v6H5l7 7 7-7zM5 18v2h14v-2H5z"/></svg>
-    Download Android APK
+    Download Countdown Android App (APK)
   </a>
-  <p class="apk-note">Not from Google Play — you may need to allow "Install unknown apps" for your browser in Android Settings.</p>
 
   <div class="next-paper-widget" id="nextPaperWidget">
     <h3 class="widget-title">
@@ -332,16 +307,13 @@
   </details>
 
   <div class="credit-session">Engineered for Success <span>Made by Musa</span></div>
-  <footer>Surulere Junior Secondary School · Student Utility Suite</footer>
+  <footer>Surulere Junior Secondary School · Class Utility Suite</footer>
 </div>
 
 <script>
 (function(){
   const $ = id => document.getElementById(id);
 
-  // ---------------------------------------------------------
-  // TIMETABLE DATA ARRAY
-  // ---------------------------------------------------------
   const timetableData = [
     {
       dateId: "2026-06-29",
@@ -397,9 +369,6 @@
 
   const activeDates = timetableData.map(d => d.dateId);
 
-  // ---------------------------------------------------------
-  // RENDER FULL TIMETABLE
-  // ---------------------------------------------------------
   const tbody = $('timetableBody');
   if(tbody){
     timetableData.forEach(day => {
@@ -414,9 +383,6 @@
     });
   }
 
-  // ---------------------------------------------------------
-  // TIMEZONE & DATE LOGIC
-  // ---------------------------------------------------------
   const examStart = new Date("2026-06-29T09:00:00+01:00").getTime();
   const examEnd = new Date("2026-07-06T14:10:00+01:00").getTime();
   
@@ -463,7 +429,6 @@
     [...container.children].forEach((b, i) => b.classList.toggle('filled', i < weeksElapsed));
   }
 
-  // Live Lagos Clock
   function updateClock(){
     const clockEl = $('lagosClock');
     if(clockEl){
@@ -473,7 +438,6 @@
   setInterval(updateClock, 1000);
   updateClock();
 
-  // Widget State Tracking
   let lastDate = '';
 
   function updateTodayWidget(){
@@ -500,13 +464,6 @@
     }
   }
 
-  // ---------------------------------------------------------
-  // NEXT PAPER LOGIC (now fully dynamic, not pinned to Day 1)
-  // ---------------------------------------------------------
-  // Flatten every paper across every day into one chronological list,
-  // each carrying a real timestamp so we can always find whichever
-  // paper is genuinely "next" — whether that's tomorrow's first paper
-  // or the first paper after a weekend gap.
   function parseLagosTime(dateId, timeStr){
     const match = timeStr.match(/(\d+):(\d+)(AM|PM)/i);
     if(!match) return null;
@@ -540,6 +497,18 @@
 
   const flatPapers = buildFlatPapers();
 
+  // Hide download link completely if examinations are officially over
+  function manageDownloadLinkVisibility(now) {
+    const downloadBtn = $('apkDownloadLink');
+    if (downloadBtn) {
+      if (now > examEnd) {
+        downloadBtn.style.display = 'none';
+      } else {
+        downloadBtn.style.display = 'inline-flex';
+      }
+    }
+  }
+
   function getNextPaper(now){
     return flatPapers.find(p => p.startTimestamp > now) || null;
   }
@@ -560,9 +529,6 @@
     `;
   }
 
-  // ---------------------------------------------------------
-  // MAIN COUNTDOWN ENGINE
-  // ---------------------------------------------------------
   function tick(){
     const now = Date.now();
     const distance = Math.max(0, examStart - now);
@@ -584,6 +550,7 @@
     prevValues = {d, h, m};
     
     updateTodayWidget();
+    manageDownloadLinkVisibility(now);
 
     if (now > examEnd) {
       $('countdownDigits').style.display = 'none';
@@ -617,14 +584,12 @@
           $('currentExamDay').textContent = `Day ${dayIndex + 1} of 6`;
           $('examProgressDesc').textContent = "Stay focused, read carefully, and execute your strategy. You've got this.";
           $('currentExamDay').style.fontSize = '3.5rem';
-          // Today's Papers widget already covers today — no need to repeat it here
           $('nextPaperWidget').style.display = 'none';
       } else {
           $('examProgressTitle').textContent = "Recovery Period";
           $('currentExamDay').textContent = "Weekend Rest";
           $('examProgressDesc').textContent = "Take a breath. Rest your mind before the final push on Monday.";
           $('currentExamDay').style.fontSize = '2.5rem';
-          // No paper today (weekend gap) — surface what's coming up next
           updateNextPaperWidget(now);
           $('nextPaperWidget').style.display = 'block';
       }
@@ -638,11 +603,8 @@
       $('quoteCard').style.display = 'block';
       $('timetableCard').style.display = 'block';
 
-      // Before exams start, "next paper" is just Day 1 — already obvious
-      // from the countdown itself, so keep this widget hidden here.
-      // It only earns its place once exams are underway and there's a
-      // genuine weekend gap to bridge (handled in the branch above).
-      $('nextPaperWidget').style.display = 'none';
+      updateNextPaperWidget(now);
+      $('nextPaperWidget').style.display = 'block';
 
       const weeksRemaining = Math.ceil(d / 7);
       const weeksElapsed = Math.min(totalWeeks, Math.max(0, totalWeeks - weeksRemaining));
@@ -691,64 +653,7 @@
   renderQuote();
   startTicking();
 
-  // ---------------------------------------------------------
-  // PWA INSTALL LOGIC
-  // ---------------------------------------------------------
-  let deferredPrompt;
-  const installBtn = $('installBtn');
-
-  // Detects whether the page is currently being run as the installed
-  // app itself (not just "is it installable"), across Android/desktop
-  // Chrome (display-mode: standalone) and iOS Safari (navigator.standalone).
-  function isRunningAsInstalledApp(){
-    return window.matchMedia('(display-mode: standalone)').matches ||
-           window.matchMedia('(display-mode: window-controls-overlay)').matches ||
-           window.navigator.standalone === true ||
-           document.referrer.startsWith('android-app://');
-  }
-
-  // If we're already running as the installed app, never show the button.
-  if (installBtn && isRunningAsInstalledApp()) {
-    installBtn.hidden = true;
-  }
-
-  window.addEventListener('beforeinstallprompt', (e) => {
-    e.preventDefault();
-    deferredPrompt = e;
-    // Extra guard: some browsers can still fire this even when installed
-    if (installBtn && !isRunningAsInstalledApp()) {
-      installBtn.hidden = false;
-      installBtn.addEventListener('click', async () => {
-        installBtn.hidden = true;
-        deferredPrompt.prompt();
-        const { outcome } = await deferredPrompt.userChoice;
-        console.log(`User prompt outcome: ${outcome}`);
-        deferredPrompt = null;
-      });
-    }
-  });
-
-  window.addEventListener('appinstalled', () => {
-    if(installBtn) installBtn.hidden = true;
-    deferredPrompt = null;
-    console.log('PWA installed successfully');
-  });
-
-  // Some browsers flip display-mode to standalone right after install
-  // without a full page reload — keep the button in sync if that happens.
-  window.matchMedia('(display-mode: standalone)').addEventListener('change', (e) => {
-    if (e.matches && installBtn) installBtn.hidden = true;
-  });
-
 })();
-
-if ("serviceWorker" in navigator) {
-  window.addEventListener("load", () => {
-    navigator.serviceWorker.register("sw.js")
-      .then(() => console.log("Service Worker Registered"))
-      .catch(err => console.error("Service Worker Failed", err));
-  });
-}
 </script>
 </body>
 </html>
