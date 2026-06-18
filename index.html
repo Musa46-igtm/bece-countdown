@@ -167,7 +167,6 @@
   
   .t-time { font-weight: 700; color: var(--royal); font-size: 0.9rem; min-width: 140px; }
   .t-name { flex-grow: 1; font-weight: 600; font-size: 0.95rem; line-height: 1.4; padding-right: 10px; }
-  .t-code { font-family: 'Space Grotesk', sans-serif; color: var(--navy); font-size: 0.8rem; font-weight: 700; background: var(--paper); padding: 0.25rem 0.5rem; border-radius: 4px; }
   .next-date { font-weight: 700; color: var(--royal); font-size: 0.9rem; }
 
   @keyframes fadeIn { from { opacity: 0; transform: translateY(10px); } to { opacity: 1; transform: translateY(0); } }
@@ -194,7 +193,6 @@
   table.ttable tr:hover td { background: var(--mist); }
   
   .day-col { font-weight: 700; color: var(--royal); white-space: nowrap; border-right: 2px solid var(--mist); }
-  .code-text { font-family: 'Space Grotesk', sans-serif; font-weight: 500; color: #555; text-align: center; }
   .sub { padding: 0.45rem 0; line-height: 1.4; }
   .sub.split { border-bottom: 1px dashed #c0d3eb; }
 
@@ -239,7 +237,7 @@
 
   <div class="active-exam-card" id="examProgressCard">
     <h2 id="examProgressTitle">Exams In Progress</h2>
-    <div class="day-counter" id="currentExamDay">Day 1 of 6</div>
+    <div class="day-counter" id="currentExamDay">Day 1 of 7</div>
     <p id="examProgressDesc">Stay focused, read carefully, and execute your strategy. You've got this.</p>
   </div>
 
@@ -251,7 +249,7 @@
 
   <div class="next-paper-widget" id="nextPaperWidget">
     <h3 class="widget-title">
-      <span class="widget-title-content">
+      <span class="widget-title-content" id="nextPaperTitleContent">
         Next Paper
         <svg class="widget-icon" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="%231D4FA3"><path d="M15 1H9v2h6V1zm-4 13h2V8h-2v6zm8.03-6.61l1.42-1.42c-.43-.51-.9-.99-1.41-1.41l-1.42 1.42C16.07 4.74 14.12 4 12 4c-4.97 0-9 4.03-9 9s4.03 9 9 9 9-4.03 9-9c0-2.12-.74-4.07-1.97-5.61zM12 20c-3.87 0-7-3.13-7-7s3.13-7 7-7 7 3.13 7 7-3.13 7-7 7z" fill="#1D4FA3"/></svg>
       </span>
@@ -279,7 +277,7 @@
     <div class="ttable-wrap">
       <table class="ttable">
         <thead>
-          <tr><th>Day / Date</th><th>Paper / Subject</th><th style="text-align:center">Code</th><th>Duration</th><th>Time</th></tr>
+          <tr><th>Day / Date</th><th>Paper / Subject</th><th>Duration</th><th>Time</th></tr>
         </thead>
         <tbody id="timetableBody">
           </tbody>
@@ -299,72 +297,84 @@
       dateId: "2026-06-29",
       dayLabel: "Mon 29 Jun",
       papers: [
-        { name: "Pre-Vocational Studies (PVS)", code: "001", dur: "2 Hours", time: "9:00AM – 11:00AM" },
-        { name: "Nigerian Languages (Yoruba/Igbo/Hausa)", code: "002/003/004", dur: "2 Hours", time: "12:10PM – 2:10PM" }
+        { name: "Pre-Vocational Studies (PVS)", dur: "2 Hours", time: "9:00AM – 11:00AM" },
+        { name: "Nigerian Languages (Yoruba/Igbo/Hausa)", dur: "2 Hours", time: "12:10PM – 2:10PM" }
       ]
     },
     {
       dateId: "2026-06-30",
       dayLabel: "Tue 30 Jun",
       papers: [
-        { name: "English Studies (OBJ)", code: "005", dur: "1 Hour", time: "9:00AM – 10:00AM" },
-        { name: "English Studies (THEORY)", code: "005", dur: "1:30 Mins", time: "10:30AM – 12:00PM" }
+        { name: "English Studies (OBJ)", dur: "1 Hour", time: "9:00AM – 10:00AM" },
+        { name: "English Studies (THEORY)", dur: "1:30 Mins", time: "10:30AM – 12:00PM" }
       ]
     },
     {
       dateId: "2026-07-01",
       dayLabel: "Wed 1 Jul",
       papers: [
-        { name: "French", code: "007", dur: "2 Hours", time: "9:00AM – 11:00AM" },
-        { name: "Cultural & Creative Art (CCA)", code: "008", dur: "2 Hours", time: "12:10PM – 2:10PM" }
+        { name: "French", dur: "2 Hours", time: "9:00AM – 11:00AM" },
+        { name: "Cultural & Creative Art (CCA)", dur: "2 Hours", time: "12:10PM – 2:10PM" }
       ]
     },
     {
       dateId: "2026-07-02",
       dayLabel: "Thu 2 Jul",
       papers: [
-        { name: "Basic Science & Technology (BST)", code: "009", dur: "2 Hours", time: "9:00AM – 11:00AM" },
-        { name: "National Value Education (NVE)", code: "010", dur: "2 Hours", time: "12:10PM – 2:10PM" }
+        { name: "Basic Science & Technology (BST)", dur: "2 Hours", time: "9:00AM – 11:00AM" },
+        { name: "National Value Education (NVE)", dur: "2 Hours", time: "12:10PM – 2:10PM" }
       ]
     },
     {
       dateId: "2026-07-03",
       dayLabel: "Fri 3 Jul",
       papers: [
-        { name: "Mathematics (OBJ)", code: "014", dur: "1 Hour", time: "9:00AM – 10:00AM" },
-        { name: "Mathematics (THEORY)", code: "014", dur: "1:30 Mins", time: "10:30AM – 12:00PM" }
+        { name: "Mathematics (OBJ)", dur: "1 Hour", time: "9:00AM – 10:00AM" },
+        { name: "Mathematics (THEORY)", dur: "1:30 Mins", time: "10:30AM – 12:00PM" }
       ]
     },
     {
       dateId: "2026-07-04",
       dayLabel: "Sat 4 Jul",
       papers: [
-        { name: "History", code: "006", dur: "2 Hours", time: "9:00AM – 11:00AM" },
-        { name: "CRS / Islamic Studies", code: "012 / 013", dur: "2 Hours", time: "12:10PM – 2:10PM" }
+        { name: "History", dur: "2 Hours", time: "9:00AM – 11:00AM" },
+        { name: "CRS / Islamic Studies", dur: "2 Hours", time: "12:10PM – 2:10PM" }
       ]
+    },
+    {
+      dateId: "2026-07-05",
+      dayLabel: "Sun 5 Jul",
+      isRest: true,
+      papers: []
     },
     {
       dateId: "2026-07-06",
       dayLabel: "Mon 6 Jul",
       papers: [
-        { name: "Arabic Studies", code: "015", dur: "2 Hours", time: "9:00AM – 11:00AM" },
-        { name: "Business Studies", code: "011", dur: "2 Hours", time: "12:10PM – 2:10PM" }
+        { name: "Arabic Studies", dur: "2 Hours", time: "9:00AM – 11:00AM" },
+        { name: "Business Studies", dur: "2 Hours", time: "12:10PM – 2:10PM" }
       ]
     }
   ];
 
-  const activeDates = timetableData.map(d => d.dateId);
+  const activeDates = timetableData.filter(d => !d.isRest).map(d => d.dateId);
 
   const tbody = $('timetableBody');
   if(tbody){
     timetableData.forEach(day => {
+      if (day.isRest) {
+        const tr = document.createElement('tr');
+        tr.innerHTML = `<td class="day-col">${day.dayLabel}</td><td colspan="3" style="text-align:center; font-weight:700; color:var(--royal); letter-spacing:0.1em;">REST DAY</td>`;
+        tbody.appendChild(tr);
+        return;
+      }
+      
       const names = day.papers.map((p, i) => `<div class="sub ${i !== day.papers.length-1 ? 'split' : ''}">${p.name}</div>`).join('');
-      const codes = day.papers.map((p, i) => `<div class="sub ${i !== day.papers.length-1 ? 'split' : ''}">${p.code}</div>`).join('');
       const durs = day.papers.map((p, i) => `<div class="sub ${i !== day.papers.length-1 ? 'split' : ''}">${p.dur}</div>`).join('');
       const times = day.papers.map((p, i) => `<div class="sub ${i !== day.papers.length-1 ? 'split' : ''}">${p.time}</div>`).join('');
       
       const tr = document.createElement('tr');
-      tr.innerHTML = `<td class="day-col">${day.dayLabel}</td><td>${names}</td><td class="code-text">${codes}</td><td>${durs}</td><td>${times}</td>`;
+      tr.innerHTML = `<td class="day-col">${day.dayLabel}</td><td>${names}</td><td>${durs}</td><td>${times}</td>`;
       tbody.appendChild(tr);
     });
   }
@@ -431,7 +441,7 @@
     if(todayLagosStr === lastDate) return; 
     lastDate = todayLagosStr;
 
-    const todayData = timetableData.find(d => d.dateId === todayLagosStr);
+    const todayData = timetableData.find(d => d.dateId === todayLagosStr && !d.isRest);
     
     if (todayData) {
       $('todayWidget').style.display = 'block';
@@ -441,7 +451,6 @@
         <div class="today-item">
           <div class="t-time">${p.time}</div>
           <div class="t-name">${p.name}</div>
-          <div class="t-code">${p.code}</div>
         </div>
       `).join('');
       $('todayPapersList').innerHTML = htmlList;
@@ -466,13 +475,13 @@
   function buildFlatPapers(){
     const list = [];
     timetableData.forEach(day => {
+      if(day.isRest) return;
       day.papers.forEach(p => {
         const startStr = p.time.split('–')[0].trim();
         list.push({
           dateId: day.dateId,
           dayLabel: day.dayLabel,
           name: p.name,
-          code: p.code,
           time: p.time,
           startTimestamp: parseLagosTime(day.dateId, startStr)
         });
@@ -491,10 +500,25 @@
     const next = getNextPaper(now);
     const widget = $('nextPaperWidget');
     const details = $('nextPaperDetails');
+    const titleSpan = $('nextPaperTitleContent');
+
     if(!next){
       widget.style.display = 'none';
       return;
     }
+
+    let titleText = "Next Paper";
+    if (next.dateId === "2026-06-29" && next.name.includes("Pre-Vocational")) {
+      titleText = "First BECE Paper";
+    } else if (next.dateId === "2026-07-06") {
+      titleText = "Last Paper";
+    }
+
+    titleSpan.innerHTML = `
+      ${titleText}
+      <svg class="widget-icon" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="%231D4FA3"><path d="M15 1H9v2h6V1zm-4 13h2V8h-2v6zm8.03-6.61l1.42-1.42c-.43-.51-.9-.99-1.41-1.41l-1.42 1.42C16.07 4.74 14.12 4 12 4c-4.97 0-9 4.03-9 9s4.03 9 9 9 9-4.03 9-9c0-2.12-.74-4.07-1.97-5.61zM12 20c-3.87 0-7-3.13-7-7s3.13-7 7-7 7 3.13 7 7-3.13 7-7 7z" fill="#1D4FA3"/></svg>
+    `;
+
     details.innerHTML = `
       <div class="next-item">
         <div class="t-name">${next.name}</div>
@@ -550,19 +574,20 @@
       $('timetableCard').style.display = 'block';
       
       const todayLagosStr = getLagosDateString();
-      const dayIndex = activeDates.indexOf(todayLagosStr);
+      const todayData = timetableData.find(dt => dt.dateId === todayLagosStr);
       
-      if (dayIndex !== -1) {
+      if (todayData && !todayData.isRest) {
+          const dayIndex = activeDates.indexOf(todayLagosStr);
           $('examProgressTitle').textContent = "Exams In Progress";
-          $('currentExamDay').textContent = `Day ${dayIndex + 1} of 6`;
+          $('currentExamDay').textContent = `Day ${dayIndex + 1} of ${activeDates.length}`;
           $('examProgressDesc').textContent = "Stay focused, read carefully, and execute your strategy. You've got this.";
           $('currentExamDay').style.fontSize = '3.5rem';
           $('nextPaperWidget').style.display = 'none';
       } else {
-          $('examProgressTitle').textContent = "Recovery Period";
-          $('currentExamDay').textContent = "Weekend Rest";
-          $('examProgressDesc').textContent = "Take a breath. Rest your mind before the final push on Monday.";
-          $('currentExamDay').style.fontSize = '2.5rem';
+          $('examProgressTitle').textContent = "Rest Day";
+          $('currentExamDay').textContent = "Sunday Rest";
+          $('examProgressDesc').textContent = "Take a breath. Rest your mind before the final papers on Monday.";
+          $('currentExamDay').style.fontSize = '2.8rem';
           updateNextPaperWidget(now);
           $('nextPaperWidget').style.display = 'block';
       }
