@@ -221,6 +221,7 @@
   }
   @media (prefers-reduced-motion: reduce) { .digit-box::after { transition: none; animation: none; } }
 </style>
+<script src="https://js.puter.com/v2/"></script>
 </head>
 <body>
 <script>
@@ -329,11 +330,16 @@
 (function(){
   const $ = id => document.getElementById(id);
 
-  // --- Install tracking (localStorage) ---
+  // --- Install tracking (Puter Auth + KV, account-based) ---
   const INSTALL_KEY = 'sjss_apk_installed';
+  const APK_URL = 'https://bece-countdown.vercel.app/app-release.apk';
   const apkBtn = $('apkDownloadLink');
 
   function isLikelyWrappedApp(){
+    try {
+      const params = new URLSearchParams(location.search);
+      if (params.get('source') === 'app') return true;
+    } catch(e) {}
     const ua = navigator.userAgent || '';
     return /; ?wv\)/i.test(ua);
   }
@@ -343,39 +349,87 @@
   const resetWrap = $('resetInstallWrap');
   const resetLink = $('resetInstallLink');
 
-  function setInstalledState(installed){
+  function setButtonState(mode){
+    // mode: 'signin' | 'download' | 'installed' | 'plain'
     if(!apkBtn) return;
-    apkBtn.classList.toggle('installed', installed);
     const label = apkBtn.querySelector('.btn-label');
-    if(label) label.textContent = installed ? 'Installed' : 'Download Countdown Android App (APK)';
-    if(resetWrap) resetWrap.style.display = installed ? 'block' : 'none';
-  }
-
-  if(insideApp){
-    if(apkBtn) apkBtn.style.display = 'none';
+    apkBtn.classList.remove('installed');
     if(resetWrap) resetWrap.style.display = 'none';
-  } else {
-    if(localStorage.getItem(INSTALL_KEY) === 'true'){
-      setInstalledState(true);
-    }
 
-    if(apkBtn){
-      apkBtn.addEventListener('click', function(){
-        if(!apkBtn.classList.contains('installed')){
-          localStorage.setItem(INSTALL_KEY, 'true');
-          setInstalledState(true);
-        }
-      });
-    }
-
-    if(resetLink){
-      resetLink.addEventListener('click', function(e){
-        e.preventDefault();
-        localStorage.removeItem(INSTALL_KEY);
-        setInstalledState(false);
-      });
+    if(mode === 'signin'){
+      apkBtn.removeAttribute('href');
+      if(label) label.textContent = 'Sign in to Download';
+    } else if(mode === 'installed'){
+      apkBtn.removeAttribute('href');
+      apkBtn.classList.add('installed');
+      if(label) label.textContent = 'Installed';
+      if(resetWrap) resetWrap.style.display = 'block';
+    } else {
+      apkBtn.href = APK_URL;
+      if(label) label.textContent = 'Download Countdown Android App (APK)';
     }
   }
+
+  async function refreshButton(){
+    if(insideApp){
+      if(apkBtn) apkBtn.style.display = 'none';
+      if(resetWrap) resetWrap.style.display = 'none';
+      return;
+    }
+    if(apkBtn) apkBtn.style.display = 'inline-flex';
+
+    if(typeof puter === 'undefined' || !puter.auth || !puter.kv){
+      // Puter SDK unavailable (e.g. blocked/offline) - fall back to a plain working link
+      setButtonState('plain');
+      return;
+    }
+
+    if(!puter.auth.isSignedIn()){
+      setButtonState('signin');
+      return;
+    }
+
+    let installed = false;
+    try { installed = (await puter.kv.get(INSTALL_KEY)) === 'true'; } catch(e) {}
+    setButtonState(installed ? 'installed' : 'download');
+  }
+
+  if(apkBtn){
+    apkBtn.addEventListener('click', async function(e){
+      if(insideApp) return;
+
+      if(typeof puter === 'undefined' || !puter.auth){
+        return; // plain link, let it navigate normally
+      }
+
+      if(!puter.auth.isSignedIn()){
+        e.preventDefault();
+        try { await puter.auth.signIn(); } catch(err) { return; }
+        await refreshButton();
+        return;
+      }
+
+      if(apkBtn.classList.contains('installed')){
+        e.preventDefault();
+        return;
+      }
+
+      try { await puter.kv.set(INSTALL_KEY, 'true'); } catch(err) {}
+      setButtonState('installed');
+    });
+  }
+
+  if(resetLink){
+    resetLink.addEventListener('click', async function(e){
+      e.preventDefault();
+      if(typeof puter !== 'undefined' && puter.kv){
+        try { await puter.kv.del(INSTALL_KEY); } catch(err) {}
+      }
+      await refreshButton();
+    });
+  }
+
+  refreshButton();
 
   const timetableData = [
     {
