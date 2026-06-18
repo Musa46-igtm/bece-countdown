@@ -5,10 +5,7 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Surulere JSS — BECE Student Companion</title>
 
-<link rel="manifest" href="manifest.json">
 <meta name="theme-color" content="#1D4FA3">
-<meta name="apple-mobile-web-app-capable" content="yes">
-<meta name="apple-mobile-web-app-status-bar-style" content="default">
 
 <link rel="icon" type="image/svg+xml" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='%231D4FA3'%3E%3Cpath d='M12 2L1 7l11 5 11-5-11-5z'/%3E%3Cpath d='M4.5 9.5V15a7.5 7.5 0 0015 0V9.5l-7.5 3.4-7.5-3.4z'/%3E%3Cpath d='M22 8.5v6c0 .8-.5 1.5-1 1.5s-1-.7-1-1.5v-6c0-.8.5-1.5 1-1.5s1 .7 1 1.5z' fill='%23C9A227'/%3E%3C/svg%3E">
 <link rel="preconnect" href="https://fonts.googleapis.com">
@@ -225,6 +222,21 @@
 </style>
 </head>
 <body>
+<script>
+  // One-time cleanup: removes any previously registered PWA service worker
+  // so the page stops behaving like an installable PWA and the APK button works normally.
+  if ('serviceWorker' in navigator) {
+    navigator.serviceWorker.getRegistrations().then(function(regs){
+      regs.forEach(function(r){ r.unregister(); });
+    });
+  }
+  if (window.caches && caches.keys) {
+    caches.keys().then(function(names){
+      names.forEach(function(n){ caches.delete(n); });
+    });
+  }
+</script>
+
 
 <div class="wrap" role="timer" aria-live="polite">
   
