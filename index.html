@@ -331,6 +331,12 @@
   // --- Install tracking (localStorage) ---
   const INSTALL_KEY = 'sjss_apk_installed';
   const apkBtn = $('apkDownloadLink');
+
+  function isLikelyWrappedApp(){
+    const ua = navigator.userAgent || '';
+    return /; ?wv\)/i.test(ua);
+  }
+  const insideApp = isLikelyWrappedApp();
   const resetWrap = $('resetInstallWrap');
   const resetLink = $('resetInstallLink');
 
@@ -342,25 +348,30 @@
     if(resetWrap) resetWrap.style.display = installed ? 'block' : 'none';
   }
 
-  if(localStorage.getItem(INSTALL_KEY) === 'true'){
-    setInstalledState(true);
-  }
+  if(insideApp){
+    if(apkBtn) apkBtn.style.display = 'none';
+    if(resetWrap) resetWrap.style.display = 'none';
+  } else {
+    if(localStorage.getItem(INSTALL_KEY) === 'true'){
+      setInstalledState(true);
+    }
 
-  if(apkBtn){
-    apkBtn.addEventListener('click', function(){
-      if(!apkBtn.classList.contains('installed')){
-        localStorage.setItem(INSTALL_KEY, 'true');
-        setInstalledState(true);
-      }
-    });
-  }
+    if(apkBtn){
+      apkBtn.addEventListener('click', function(){
+        if(!apkBtn.classList.contains('installed')){
+          localStorage.setItem(INSTALL_KEY, 'true');
+          setInstalledState(true);
+        }
+      });
+    }
 
-  if(resetLink){
-    resetLink.addEventListener('click', function(e){
-      e.preventDefault();
-      localStorage.removeItem(INSTALL_KEY);
-      setInstalledState(false);
-    });
+    if(resetLink){
+      resetLink.addEventListener('click', function(e){
+        e.preventDefault();
+        localStorage.removeItem(INSTALL_KEY);
+        setInstalledState(false);
+      });
+    }
   }
 
   const timetableData = [
@@ -548,6 +559,7 @@
 
   function manageDownloadLinkVisibility(now) {
     const downloadBtn = $('apkDownloadLink');
+    if (insideApp) { if (downloadBtn) downloadBtn.style.display = 'none'; return; }
     if (downloadBtn) {
       if (now > examEnd) {
         downloadBtn.style.display = 'none';
