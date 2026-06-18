@@ -322,6 +322,7 @@
 
   <div class="credit-session">Engineered for Success <span>Made by Musa</span></div>
   <footer>Surulere Junior Secondary School · Class Utility Suite</footer>
+  <div id="uaDebug" style="margin-top:1rem; font-size:0.6rem; color:#aaa; text-align:center; word-break:break-all; padding:0 0.5rem;"></div>
 </div>
 
 <script>
@@ -337,6 +338,8 @@
     return /; ?wv\)/i.test(ua);
   }
   const insideApp = isLikelyWrappedApp();
+  const uaDebugEl = $('uaDebug');
+  if(uaDebugEl) uaDebugEl.textContent = navigator.userAgent;
   const resetWrap = $('resetInstallWrap');
   const resetLink = $('resetInstallLink');
 
