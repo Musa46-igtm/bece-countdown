@@ -203,6 +203,7 @@
     box-shadow: 0 4px 12px rgba(10, 38, 71, 0.15); transition: background 0.3s;
   }
   .download-btn:hover { background: var(--royal); }
+  .download-btn.installed { background: #94a3b8; cursor: not-allowed; pointer-events: none; box-shadow: none; }
   .download-btn svg { width: 18px; height: 18px; fill: currentColor; }
 
   .credit-session { text-align: center; margin: 2rem 0 0.5rem; font-size: 0.78rem; letter-spacing: 0.08em; text-transform: uppercase; color: var(--navy); font-weight: 600; opacity: 0.9; }
@@ -275,8 +276,11 @@
 
   <a href="https://bece-countdown.vercel.app/app-release.apk" class="download-btn" id="apkDownloadLink" target="_blank" rel="noopener">
     <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M17 1.01L7 1c-1.1 0-2 .9-2 2v18c0 1.1.9 2 2 2h10c1.1 0 2-.9 2-2V3c0-1.1-.9-1.99-2-1.99zM17 19H7V5h10v14zM12 18c.55 0 1-.45 1-1s-.45-1-1-1-1 .45-1 1 .45 1 1 1z"/></svg>
-    Download Countdown Android App (APK)
+    <span class="btn-label">Download Countdown Android App (APK)</span>
   </a>
+  <div id="resetInstallWrap" style="display:none; text-align:center; margin-top:-1.2rem; margin-bottom:1.6rem;">
+    <a href="#" id="resetInstallLink" style="font-size:0.8rem; color:var(--royal); text-decoration:underline;">Uninstalled the app? Tap to reset</a>
+  </div>
 
   <div class="next-paper-widget" id="nextPaperWidget">
     <h3 class="widget-title">
@@ -323,6 +327,41 @@
 <script>
 (function(){
   const $ = id => document.getElementById(id);
+
+  // --- Install tracking (localStorage) ---
+  const INSTALL_KEY = 'sjss_apk_installed';
+  const apkBtn = $('apkDownloadLink');
+  const resetWrap = $('resetInstallWrap');
+  const resetLink = $('resetInstallLink');
+
+  function setInstalledState(installed){
+    if(!apkBtn) return;
+    apkBtn.classList.toggle('installed', installed);
+    const label = apkBtn.querySelector('.btn-label');
+    if(label) label.textContent = installed ? 'Installed' : 'Download Countdown Android App (APK)';
+    if(resetWrap) resetWrap.style.display = installed ? 'block' : 'none';
+  }
+
+  if(localStorage.getItem(INSTALL_KEY) === 'true'){
+    setInstalledState(true);
+  }
+
+  if(apkBtn){
+    apkBtn.addEventListener('click', function(){
+      if(!apkBtn.classList.contains('installed')){
+        localStorage.setItem(INSTALL_KEY, 'true');
+        setInstalledState(true);
+      }
+    });
+  }
+
+  if(resetLink){
+    resetLink.addEventListener('click', function(e){
+      e.preventDefault();
+      localStorage.removeItem(INSTALL_KEY);
+      setInstalledState(false);
+    });
+  }
 
   const timetableData = [
     {
