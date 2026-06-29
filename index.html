@@ -529,7 +529,13 @@
 
   function tick(){
     const now = Date.now();
-    const distance = Math.max(0, examStart - now);
+    let target;
+    if (now < examStart) {
+      target = examStart;
+    } else {
+      target = examEnd;
+    }
+    const distance = Math.max(0, target - now);
     
     const d = Math.floor(distance / 86400000);
     const h = Math.floor((distance % 86400000) / 3600000);
@@ -550,8 +556,9 @@
     updateTodayWidget();
 
     if (now > examEnd) {
-      $('countdownDigits').style.display = 'none';
-      $('examlineText').style.display = 'none';
+      $('countdownDigits').style.display = 'flex';
+      $('examlineText').style.display = 'block';
+      $('examlineText').innerHTML = 'BECE Ends In: <strong>Mon, Jul 6, 2026 • 2:10PM</strong>';
       $('lagosClock').style.display = 'none';
       $('progressSection').style.display = 'none';
       $('examProgressCard').style.display = 'none';
